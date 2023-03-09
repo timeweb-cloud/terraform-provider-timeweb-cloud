@@ -45,7 +45,7 @@ Terraform позволяет автоматизированно управлят
     terraform {
       required_providers {
         twc = {
-          source = "tf.timeweb.cloud/twc/timeweb-cloud"
+          source = "tf.timeweb.cloud/timeweb-cloud/cloud-timeweb"
         }
       }
       required_version = ">= 0.13"
@@ -88,7 +88,7 @@ provider "twc" {
 terraform {
   required_providers {
     twc = {
-      source = "tf.timeweb.cloud/twc/timeweb-cloud"
+      source = "tf.timeweb.cloud/timeweb-cloud/cloud-timeweb"
     }
   }
   required_version = ">= 0.13"
