@@ -29,7 +29,7 @@ Terraform позволяет автоматизированно управлят
 
 ### Установите Terraform
 
-Вы можете установить Terraform согласно (официальной инструкции)[https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli?in=terraform%2Faws-get-started]
+Вы можете установить Terraform согласно [официальной инструкции](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli?in=terraform%2Faws-get-started)
 
 ### Создание конфигурации Terraform
 
@@ -45,7 +45,7 @@ Terraform позволяет автоматизированно управлят
     terraform {
       required_providers {
         twc = {
-          source = "tf.timeweb.cloud/timeweb-cloud/cloud-timeweb"
+          source = "tf.timeweb.cloud/timeweb-cloud/timeweb-cloud"
         }
       }
       required_version = ">= 0.13"
@@ -88,7 +88,7 @@ provider "twc" {
 terraform {
   required_providers {
     twc = {
-      source = "tf.timeweb.cloud/timeweb-cloud/cloud-timeweb"
+      source = "tf.timeweb.cloud/timeweb-cloud/timeweb-cloud"
     }
   }
   required_version = ">= 0.13"
