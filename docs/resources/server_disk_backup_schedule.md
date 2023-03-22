@@ -12,9 +12,45 @@ Resource for describing needed disk auto backup properties and schedule
 ## Примеры использования
 
 ```terraform
-resource "twc_server_disk_backup_schedule" "example" {
+data "twc_os" "example-os" {
+  name = "ubuntu"
+  version = "22.04"
+}
+
+data "twc_presets" "example-preset" {
+  price_filter {
+    from = 300
+    to = 400
+  }
+}
+
+resource "twc_server" "example-server" {
+  name = "Example server with preset"
+  os_id = data.twc_os.example-os.id
+
+  preset_id = data.twc_presets.example-preset.id
+}
+
+resource "twc_server_disk" "example-additional-disk" {
+  source_server_id = twc_server.example-server.id
+
+  size = 1024 * 10
+}
+
+# Usage example for auto backup schedule on main disk
+resource "twc_server_disk_backup_schedule" "main-disk-example" {
   source_server_id = twc_server.example-server.id
   source_server_disk_id = twc_server.example-server.disks[0].id
+
+  copy_count = 10
+  creation_start_at = "2023-02-02T00:00:00.000Z"
+  interval = "month"
+}
+
+# Usage example for auto backup schedule on additional disk
+resource "twc_server_disk_backup_schedule" "additional-disk-example" {
+  source_server_id = twc_server.example-server.id
+  source_server_disk_id = twc_server_disk.example-additional-disk.id
 
   copy_count = 10
   creation_start_at = "2023-02-02T00:00:00.000Z"

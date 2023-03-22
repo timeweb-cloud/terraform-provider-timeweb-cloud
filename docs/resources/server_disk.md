@@ -12,6 +12,26 @@ Resource for describing needed additional disk for server and provides actual in
 ## Примеры использования
 
 ```terraform
+data "twc_os" "example-os" {
+  name = "ubuntu"
+  version = "22.04"
+}
+
+data "twc_presets" "example-preset" {
+  price_filter {
+    from = 300
+    to = 400
+  }
+}
+
+resource "twc_server" "example-server" {
+  name = "Example server with preset"
+  os_id = data.twc_os.example-os.id
+
+  preset_id = data.twc_presets.example-preset.id
+}
+
+# Create additional disk for server with 10 Gb size
 resource "twc_server_disk" "example" {
   source_server_id = twc_server.example-server.id
 
@@ -36,3 +56,11 @@ resource "twc_server_disk" "example" {
 - `type` (String) Disk type (`ssd`, `nvme`, `hdd`)
 - `used` (Number) Used disk space in MB
 
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Server disk can be imported by specifying the numeric identifier in format SERVER-ID/SERVER-DISK-ID (all parameters from URL)
+terraform import twc_server_disk.example 42/13
+```

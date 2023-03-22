@@ -12,20 +12,20 @@ Configurator data source that provides information about available hardware para
 ## Примеры использования
 
 ```terraform
-data "twc_os" "example" {
+data "twc_os" "example-os" {
   name = "ubuntu"
   version = "22.04"
 }
 
 # Select any configurator with location = "ru-1"
-data "twc_configurator" "example" {
+data "twc_configurator" "example-configurator" {
   location = "ru-1"
 }
 
 # Usage example of selected configuration
 resource "twc_server" "example-server" {
   name = "Example server"
-  os_id = data.twc_os.os.id
+  os_id = data.twc_os.example-os.id
 
   configuration {
     configurator_id = data.twc_configurator.example-configurator.id

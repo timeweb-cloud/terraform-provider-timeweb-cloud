@@ -12,6 +12,26 @@ Resource for describing needed additional IP address for server and provides act
 ## Примеры использования
 
 ```terraform
+data "twc_os" "example-os" {
+  name = "ubuntu"
+  version = "22.04"
+}
+
+data "twc_presets" "example-preset" {
+  price_filter {
+    from = 300
+    to = 400
+  }
+}
+
+resource "twc_server" "example-server" {
+  name = "Example server with preset"
+  os_id = data.twc_os.example-os.id
+
+  preset_id = data.twc_presets.example-preset.id
+}
+
+# Usage example for create additional IP address
 resource "twc_server_ip" "example" {
   source_server_id = twc_server.example-server.id
 
@@ -37,3 +57,11 @@ resource "twc_server_ip" "example" {
 - `ip` (String) Address of created IP
 - `is_main` (Boolean) Flag that shows IP is main or not (always `false` for now)
 
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Server IP can be imported by specifying the numeric identifier in format SERVER-ID/SERVER-IP (SERVER-ID from URL)
+terraform import twc_server_disk_backup.example 42/1.1.1.1
+```

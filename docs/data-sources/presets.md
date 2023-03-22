@@ -12,13 +12,13 @@ Data source that provides bunch of useful parameters for filtering and suitable 
 ## Примеры использования
 
 ```terraform
-data "twc_os" "example" {
+data "twc_os" "example-os" {
   name = "ubuntu"
   version = "22.04"
 }
 
 # Select any preset from location = "ru-1", disk_type = "nvme", 1 CPU and 2 Gb RAM with price from 300 RUB up to 400 RUB
-data "twc_presets" "example" {
+data "twc_presets" "example-preset" {
   location = "ru-1"
   disk_type = "nvme"
   cpu = 1
@@ -33,9 +33,9 @@ data "twc_presets" "example" {
 # Usage example of selected preset
 resource "twc_server" "example-server" {
   name = "Example server"
-  os_id = data.twc_os.os.id
+  os_id = data.twc_os.example-os.id
 
-  preset_id = data.twc_presets.example.id
+  preset_id = data.twc_presets.example-preset.id
 }
 ```
 

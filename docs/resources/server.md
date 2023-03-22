@@ -14,18 +14,18 @@ Resource for describing needed server and provides actual information about its 
 ```terraform
 ### Example server with configurator
 
-data "twc_configurator" "configurator" {
+data "twc_configurator" "example-configurator" {
   location = "ru-1"
 }
 
-data "twc_os" "os" {
+data "twc_os" "example-os" {
   name = "ubuntu"
   version = "22.04"
 }
 
 resource "twc_server" "example-server" {
   name = "Example server"
-  os_id = data.twc_os.os.id
+  os_id = data.twc_os.example-os.id
 
   configuration {
     configurator_id = data.twc_configurator.example-configurator.id
@@ -43,7 +43,7 @@ data "twc_projects" "example-project" {
 
 resource "twc_server" "example-server" {
   name = "Example server with project"
-  os_id = data.twc_os.os.id
+  os_id = data.twc_os.example-os.id
 
   configuration {
     configurator_id = data.twc_configurator.example-configurator.id
@@ -62,7 +62,7 @@ resource "twc_server" "cloned-server-example" {
   source_server_id = twc_server.example-server.id
 
   configuration {
-    configurator_id = data.twc_configurator.configurator.id
+    configurator_id = data.twc_configurator.example-configurator.id
     disk = 1024 * 5 * 4
     cpu = 1
     ram = 1024
@@ -80,7 +80,7 @@ data "twc_presets" "example-preset" {
 
 resource "twc_server" "example-server-with-preset" {
   name = "Example server with preset"
-  os_id = data.twc_os.os.id
+  os_id = data.twc_os.example-os.id
 
   preset_id = data.twc_presets.example-preset.id
 }
@@ -123,7 +123,7 @@ resource "twc_server" "server-with-software" {
 - `project_id` (Number) Project ID for created server
 - `software_id` (Number) Software ID for server (not supported for cloned servers)
 - `source_server_id` (Number) Server ID for which clone should be created
-- `ssh_keys_ids` (List of Number) List of SSH keys IDs for server
+- `ssh_keys_ids` (Set of Number) List of SSH keys IDs for server
 
 ### Read-Only
 
@@ -219,3 +219,11 @@ Read-Only:
 - `id` (Number)
 - `name` (String)
 
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Server can be imported by specifying the numeric identifier (from URL)
+terraform import twc_server.example 42
+```

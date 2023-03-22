@@ -12,12 +12,12 @@ Data source that provides bunch of useful parameters for filtering and suitable 
 ## Примеры использования
 
 ```terraform
-data "twc_configurator" "example" {
+data "twc_configurator" "example-configurator" {
   location = "ru-1"
 }
 
 # Select OS with name = "ubuntu" and version = "22.04"
-data "twc_os" "example" {
+data "twc_os" "example-os" {
   name = "ubuntu"
   version = "22.04"
 }
@@ -25,7 +25,7 @@ data "twc_os" "example" {
 # Usage example of selected OS
 resource "twc_server" "example-server" {
   name = "Example server"
-  os_id = data.twc_os.os[0].id
+  os_id = data.twc_os.example-os.id
 
   configuration {
     configurator_id = data.twc_configurator.example-configurator.id
