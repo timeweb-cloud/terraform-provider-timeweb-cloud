@@ -15,6 +15,11 @@ Terraform позволяет автоматизированно управлят
   * [twc_server_disk](docs/resources/server_disk.md) - дополнительный диск для сервера;
   * [twc_server_disk_backup](docs/resources/server_disk_backup.md) - резервная копия  основного и дополнительного диска сервера;
   * [twc_server_disk_backup_schedule](docs/resources/server_disk_backup_schedule.md) - настройки автоматически создаваемых резервных копий основного и дополнительного диска сервера;
+  * [twc_project](docs/resources/project.md) - проекты;
+  * [twc_s3_bucket](docs/resources/s3_bucket.md) - хранилище S3;
+  * [twc_s3_bucket_directory](docs/resources/s3_bucket_directory.md) - директории S3-хранилища;
+  * [twc_s3_bucket_file](docs/resources/s3_bucket_file.md) - файлы S3-хранилища;
+  * [twc_s3_bucket_subdomain](docs/resources/s3_bucket_subdomain.md) - поддомены для S3-хранилища;
 
 * Источники данных
 
@@ -24,6 +29,8 @@ Terraform позволяет автоматизированно управлят
   * [twc_projects](docs/data-sources/projects.md) - проекты аккаунта;
   * [twc_software](docs/data-sources/software.md) - ПО для установки на сервер;
   * [twc_ssh_keys](docs/data-sources/ssh_keys.md) - SSH-ключи для установки на сервер;
+  * [twc_s3_bucket](docs/data-sources/s3_bucket.md) - S3 хранилища;
+  * [twc_s3_preset](docs/data-sources/s3_preset.md) - пресеты конфигураций S3 хранилища
 
 ## Быстрый старт
 
