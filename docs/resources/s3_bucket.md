@@ -37,11 +37,11 @@ resource "twc_s3_bucket" "example-s3-bucket" {
 ### Required
 
 - `name` (String) Name for S3 bucket
+- `preset_id` (Number) Preset ID for S3 bucket
 - `type` (String) Type for S3 bucket (`private`, `public`)
 
 ### Optional
 
-- `preset_id` (Number) Preset ID for S3 bucket
 - `project_id` (Number) Project ID for created S3 bucket
 
 ### Read-Only
