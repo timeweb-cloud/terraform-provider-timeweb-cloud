@@ -16,7 +16,7 @@ Data source that provides capability for filtering and S3 bucket selection. All 
 
 ### Required
 
-- `name` (String) Name of specified project
+- `name` (String) Name of specified S3 bucket
 
 ### Read-Only
 

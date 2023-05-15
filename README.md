@@ -20,11 +20,12 @@ Terraform позволяет автоматизированно управлят
   * [twc_s3_bucket_directory](docs/resources/s3_bucket_directory.md) - директории S3-хранилища;
   * [twc_s3_bucket_file](docs/resources/s3_bucket_file.md) - файлы S3-хранилища;
   * [twc_s3_bucket_subdomain](docs/resources/s3_bucket_subdomain.md) - поддомены для S3-хранилища;
-  * [twc_db_mysql_5](docs/resources/db_mysql_5.md) - Управляемая СУБД MySQL 5.7
-  * [twc_db_mysql_8](docs/resources/db_mysql_8.md) - Управляемая СУБД MySQL 8
-  * [twc_db_postgres](docs/resources/db_postgres.md) - Управляемая СУБД Postgres
-  * [twc_db_redis](docs/resources/db_redis.md) - Управляемая СУБД Redis
-  * [twc_db_mongodb](docs/resources/db_mongodb.md) - Управляемая СУБД MongoDB
+  * [twc_db_mysql_5](docs/resources/db_mysql_5.md) - Управляемая СУБД MySQL 5.7;
+  * [twc_db_mysql_8](docs/resources/db_mysql_8.md) - Управляемая СУБД MySQL 8;
+  * [twc_db_postgres](docs/resources/db_postgres.md) - Управляемая СУБД Postgres;
+  * [twc_db_redis](docs/resources/db_redis.md) - Управляемая СУБД Redis;
+  * [twc_db_mongodb](docs/resources/db_mongodb.md) - Управляемая СУБД MongoDB;
+  * [twc_dns_rr](docs/resources/db_dns_rr.md) - ресурсные записи DNS;
 
 * Источники данных
 
@@ -37,6 +38,7 @@ Terraform позволяет автоматизированно управлят
   * [twc_s3_bucket](docs/data-sources/s3_bucket.md) - S3 хранилища;
   * [twc_s3_preset](docs/data-sources/s3_preset.md) - пресеты конфигураций S3 хранилища;
   * [twc_db_preset](docs/data-sources/db_preset.md) - пресеты конфигураций баз данных;
+  * [twc_dns_zone](docs/data-sources/dns_zone.md) - зоны DNS;
 
 ## Быстрый старт
 
