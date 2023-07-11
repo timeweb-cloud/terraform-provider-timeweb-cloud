@@ -57,8 +57,13 @@ resource "twc_db_postgres" "example-postgres" {
 - `join_collapse_limit` (Number) Threshold of elements in `FROM` that will be transformed to explicit `JOIN`
 - `lock_timeout` (Number) Time for obtaining lock
 - `login` (String) Login for database
+- `max_connections` (Number) Determines the maximum number of concurrent connections to the database server
 - `max_prepared_transactions` (Number) Max count of stored prepared statements
 - `project_id` (Number) Project ID for created DB
+- `shared_buffers` (Number) Sets the number of shared memory buffers used by the server
+- `temp_buffers` (Number) Sets the maximum number of temporary buffers used by each session
+- `wal_buffers` (Number) Sets the number of disk-page buffers in shared memory for WAL
+- `work_mem` (Number) Sets the maximum memory to be used by each autovacuum worker process
 
 ### Read-Only
 

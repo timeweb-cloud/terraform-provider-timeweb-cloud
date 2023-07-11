@@ -55,11 +55,13 @@ resource "twc_db_mysql_8" "example-mysql-8" {
 - `innodb_thread_concurrency` (Number) Maximum active threads count
 - `innodb_write_io_threads` (Number) Threads count for write operation
 - `is_external_ip` (Boolean) Flag that shows allowability database only by external IP address
-- `join_buffer_size` (String) Buffer size for JOIN operation
+- `join_buffer_size` (Number) Buffer size for JOIN operation
 - `login` (String) Login for database
-- `max_allowed_packet` (String) Max allowed size for one packet or parameter that may be sent via `mysql_stmt_send_long_data()`
-- `max_heap_table_size` (String) Max size for user MEMORY-tables
+- `max_allowed_packet` (Number) Max allowed size for one packet or parameter that may be sent via `mysql_stmt_send_long_data()`
+- `max_connections` (Number) The maximum permitted number of simultaneous client connections
+- `max_heap_table_size` (Number) Max size for user MEMORY-tables
 - `project_id` (Number) Project ID for created DB
+- `sql_mode` (Set of String) The current server SQL mode
 
 ### Read-Only
 

@@ -25,7 +25,7 @@ data "twc_presets" "example-preset" {
 }
 
 # Create new SSH key
-data "twc_ssh_keys" "example-key" {
+resource "twc_ssh_keys" "example-key" {
   name = "Example"
   body = file("~/.ssh/some-key.pub")
 }
