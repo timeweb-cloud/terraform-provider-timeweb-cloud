@@ -28,6 +28,8 @@ Terraform позволяет автоматизированно управлят
   * [twc_dns_rr](docs/resources/db_dns_rr.md) - ресурсные записи DNS;
   * [twc_k8s_cluster](docs/resources/k8s_cluster.md) - управляемый кластер K8S;
   * [twc_k8s_node_group](docs/resources/k8s_node_group.md) - группы узлов кластера K8S;
+  * [twc_firewall](docs/resources/firewall.md) - управляемый Firewall;
+  * [twc_firewall_rule](docs/resources/firewall_rule.md) - правила управляемого Firewall;
 
 * Источники данных
 
