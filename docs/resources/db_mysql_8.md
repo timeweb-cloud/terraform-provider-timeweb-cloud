@@ -56,6 +56,7 @@ resource "twc_db_mysql_8" "example-mysql-8" {
 - `innodb_write_io_threads` (Number) Threads count for write operation
 - `is_external_ip` (Boolean) Flag that shows allowability database only by external IP address
 - `join_buffer_size` (Number) Buffer size for JOIN operation
+- `local_network` (Block List, Max: 1) Flag that enables local network for DB (see [below for nested schema](#nestedblock--local_network))
 - `login` (String) Login for database
 - `max_allowed_packet` (Number) Max allowed size for one packet or parameter that may be sent via `mysql_stmt_send_long_data()`
 - `max_connections` (Number) The maximum permitted number of simultaneous client connections
@@ -72,6 +73,18 @@ resource "twc_db_mysql_8" "example-mysql-8" {
 - `local_ip` (String) Local IP-address database of network interface
 - `port` (Number) Port for connection to database
 - `status` (String) Current status of database (`started`, `starting`, `stoped`, `no_paid`)
+
+<a id="nestedblock--local_network"></a>
+### Nested Schema for `local_network`
+
+Required:
+
+- `id` (String) ID of VPC for assign address from
+
+Optional:
+
+- `ip` (String) Address in VPC subnetwork for manual assign
+
 
 <a id="nestedatt--disk_stats"></a>
 ### Nested Schema for `disk_stats`

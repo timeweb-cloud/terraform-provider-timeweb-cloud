@@ -53,6 +53,7 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 - `cpu` (Number) Sum of CPU count of all worker nodes
 - `disk` (Number) Sum of disks volume of worker nodes
 - `id` (String) The ID of this resource.
+- `kubeconfig` (String, Sensitive) K8S cluster kubeconfig
 - `ram` (Number) Sum of RAM count of all worker nodes
 - `status` (String) Current status of K8S cluster (`installing`, `provisioning`, `active`, `unpaid`)
 

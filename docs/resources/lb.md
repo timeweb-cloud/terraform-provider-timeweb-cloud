@@ -80,6 +80,7 @@ resource "twc_lb_rule" "example-lb-rule" {
 - `is_ssl` (Boolean) Automatic redirect HTTP to HTTPS
 - `is_sticky` (Boolean) Save user session for balancing to same backend server
 - `is_use_proxy` (Boolean) Use PROXY-protocol for communicating with backend server
+- `local_network` (Block List, Max: 1) Flag that enables local network for load balancer (see [below for nested schema](#nestedblock--local_network))
 - `project_id` (Number) Project ID for created balancer
 
 ### Read-Only
@@ -101,4 +102,16 @@ Optional:
 - `proto` (String) Protocol for active backend health check
 - `rise` (Number) Success requests count threshold for active backend health check
 - `timeout` (Number) Timeout for active backend health check
+
+
+<a id="nestedblock--local_network"></a>
+### Nested Schema for `local_network`
+
+Required:
+
+- `id` (String) ID of VPC for assign address from
+
+Optional:
+
+- `ip` (String) Address in VPC subnetwork for manual assign
 

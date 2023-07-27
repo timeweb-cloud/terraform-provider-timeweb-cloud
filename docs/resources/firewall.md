@@ -2,12 +2,12 @@
 page_title: "twc_firewall Resource - Timeweb Cloud"
 subcategory: ""
 description: |-
-  Resource for describing needed load firewall and provides actual information about its status
+  Resource for describing needed firewall and provides actual information about its status
 ---
 
 # twc_firewall (Resource)
 
-Resource for describing needed load firewall and provides actual information about its status
+Resource for describing needed firewall and provides actual information about its status
 
 ## Примеры использования
 

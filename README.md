@@ -25,11 +25,14 @@ Terraform позволяет автоматизированно управлят
   * [twc_db_postgres](docs/resources/db_postgres.md) - управляемая СУБД Postgres;
   * [twc_db_redis](docs/resources/db_redis.md) - управляемая СУБД Redis;
   * [twc_db_mongodb](docs/resources/db_mongodb.md) - управляемая СУБД MongoDB;
+  * [twc_db_backup](docs/resources/db_backup.md) - бекапы управляемых СУБД;
+  * [twc_db_backup_schedule](docs/resources/db_backup_schedule.md) - настройка автоматически создаваемых бекапов СУБД;
   * [twc_dns_rr](docs/resources/db_dns_rr.md) - ресурсные записи DNS;
   * [twc_k8s_cluster](docs/resources/k8s_cluster.md) - управляемый кластер K8S;
   * [twc_k8s_node_group](docs/resources/k8s_node_group.md) - группы узлов кластера K8S;
   * [twc_firewall](docs/resources/firewall.md) - управляемый Firewall;
   * [twc_firewall_rule](docs/resources/firewall_rule.md) - правила управляемого Firewall;
+  * [twc_vpc] - управляемый VPC;
 
 * Источники данных
 
