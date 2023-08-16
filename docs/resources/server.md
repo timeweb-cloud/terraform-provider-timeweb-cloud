@@ -158,6 +158,7 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 - `bandwidth` (Number) Bandwidth for server
 - `comment` (String) Comment for server
 - `configuration` (Block List, Max: 1) Configuration for server (see [below for nested schema](#nestedblock--configuration))
+- `image_id` (String) Image ID for servers (not supported for cloned servers)
 - `local_network` (Block List, Max: 1) Flag that enables local network for created server (not supported for cloned servers) (see [below for nested schema](#nestedblock--local_network))
 - `os_id` (Number) OS ID for server (not supported for cloned servers)
 - `preset_id` (Number) Preset ID for server (conflicts with configuration)
@@ -177,6 +178,7 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 - `id` (String) The ID of this resource.
 - `is_ddos_guard` (Boolean) Flag that shows status of DDoS guard service
 - `location` (String) Location for the server (`ru-1`, `ru-2`, `pl-1`, `kz-1`)
+- `main_ipv4` (String) Main IPv4 address from public interface
 - `networks` (List of Object) (see [below for nested schema](#nestedatt--networks))
 - `os` (List of Object) Information about specified OS (see [below for nested schema](#nestedatt--os))
 - `ram` (Number) Current RAM size of server

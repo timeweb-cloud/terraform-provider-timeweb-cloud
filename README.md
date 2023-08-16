@@ -47,6 +47,7 @@ Terraform позволяет автоматизированно управлят
   * [twc_db_preset](docs/data-sources/db_preset.md) - пресеты конфигураций баз данных;
   * [twc_dns_zone](docs/data-sources/dns_zone.md) - зоны DNS;
   * [twc_k8s_preset](docs/data-sources/k8s_preset.md) - пресеты конфигураций K8S кластера;
+  * [twc_image](docs/data-sources/image.md) - образы для серверов;
 
 ## Быстрый старт
 
