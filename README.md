@@ -32,7 +32,7 @@ Terraform позволяет автоматизированно управлят
   * [twc_k8s_node_group](docs/resources/k8s_node_group.md) - группы узлов кластера K8S;
   * [twc_firewall](docs/resources/firewall.md) - управляемый Firewall;
   * [twc_firewall_rule](docs/resources/firewall_rule.md) - правила управляемого Firewall;
-  * [twc_vpc] - управляемый VPC;
+  * [twc_vpc](docs/resources/vpc.md) - управляемый VPC;
 
 * Источники данных
 
