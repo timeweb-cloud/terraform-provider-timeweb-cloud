@@ -214,3 +214,9 @@ Success! The configuration is valid.
     ```
 
 2. Введите слово `yes` и нажмите *Enter*
+
+## Модули от сообщества
+
+Модули от сторонних разработчиков.
+
+- [terraform-timeweb-cloud-server](https://github.com/deff-dev/terraform-timeweb-cloud-server) — модуль для создания облачных серверов [[Terraform Registry](https://registry.terraform.io/modules/deff-dev/cloud-server/timeweb/latest)↗].
