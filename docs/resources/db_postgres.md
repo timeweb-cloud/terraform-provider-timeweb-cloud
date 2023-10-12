@@ -53,7 +53,7 @@ resource "twc_db_postgres" "example-postgres" {
 - `gin_pending_list_limit` (Number) Maximum write queue size of `GIN` index
 - `idle_in_transaction_session_timeout` (Number) Maximum idle time for opened transaction
 - `idle_session_timeout` (Number) Maximum idle time for session
-- `is_external_ip` (Boolean) Flag that shows allowability database only by external IP address
+- `is_external_ip` (Boolean) If this flag is set to true, then an external IP address will be attached to the database.
 - `join_collapse_limit` (Number) Threshold of elements in `FROM` that will be transformed to explicit `JOIN`
 - `local_network` (Block List, Max: 1) Flag that enables local network for DB (see [below for nested schema](#nestedblock--local_network))
 - `lock_timeout` (Number) Time for obtaining lock

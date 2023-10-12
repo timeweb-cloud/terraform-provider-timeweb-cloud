@@ -54,7 +54,7 @@ resource "twc_db_mysql_8" "example-mysql-8" {
 - `innodb_read_io_threads` (Number) Threads count for read operation
 - `innodb_thread_concurrency` (Number) Maximum active threads count
 - `innodb_write_io_threads` (Number) Threads count for write operation
-- `is_external_ip` (Boolean) Flag that shows allowability database only by external IP address
+- `is_external_ip` (Boolean) If this flag is set to true, then an external IP address will be attached to the database.
 - `join_buffer_size` (Number) Buffer size for JOIN operation
 - `local_network` (Block List, Max: 1) Flag that enables local network for DB (see [below for nested schema](#nestedblock--local_network))
 - `login` (String) Login for database
