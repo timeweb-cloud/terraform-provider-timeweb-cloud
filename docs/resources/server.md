@@ -156,6 +156,7 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 ### Optional
 
 - `bandwidth` (Number) Bandwidth for server
+- `cloud_init` (String) Cloud-init script
 - `comment` (String) Comment for server
 - `configuration` (Block List, Max: 1) Configuration for server (see [below for nested schema](#nestedblock--configuration))
 - `image_id` (String) Image ID for servers (not supported for cloned servers)

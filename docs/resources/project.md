@@ -13,26 +13,26 @@ Resource for describing project. Learn more about projects [in API documentation
 
 ```terraform
 data "twc_os" "example-os" {
-  name = "ubuntu"
+  name    = "ubuntu"
   version = "22.04"
 }
 
 data "twc_presets" "example-preset" {
   price_filter {
     from = 300
-    to = 400
+    to   = 400
   }
 }
 
 # Create new Project
 resource "twc_project" "example-project" {
-  name = "Example"
+  name        = "Example"
   description = "Some example project"
 }
 
 # Usage example of created Project
 resource "twc_server" "example-project" {
-  name = "Example project"
+  name  = "Example project"
   os_id = data.twc_os.example-os.id
 
   preset_id = data.twc_presets.example-preset.id
