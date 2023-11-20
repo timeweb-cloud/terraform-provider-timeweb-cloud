@@ -142,7 +142,6 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 
   local_network {
     id = twc_vpc.example-vpc.id
-    ip = "192.168.0.15"
   }
 }
 ```
