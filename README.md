@@ -20,13 +20,11 @@ Terraform позволяет автоматизированно управлят
   * [twc_s3_bucket_directory](docs/resources/s3_bucket_directory.md) - директории S3-хранилища;
   * [twc_s3_bucket_file](docs/resources/s3_bucket_file.md) - файлы S3-хранилища;
   * [twc_s3_bucket_subdomain](docs/resources/s3_bucket_subdomain.md) - поддомены для S3-хранилища;
-  * [twc_db_mysql_5](docs/resources/db_mysql_5.md) - управляемая СУБД MySQL 5.7;
-  * [twc_db_mysql_8](docs/resources/db_mysql_8.md) - управляемая СУБД MySQL 8;
-  * [twc_db_postgres](docs/resources/db_postgres.md) - управляемая СУБД Postgres;
-  * [twc_db_redis](docs/resources/db_redis.md) - управляемая СУБД Redis;
-  * [twc_db_mongodb](docs/resources/db_mongodb.md) - управляемая СУБД MongoDB;
-  * [twc_db_backup](docs/resources/db_backup.md) - бекапы управляемых СУБД;
-  * [twc_db_backup_schedule](docs/resources/db_backup_schedule.md) - настройка автоматически создаваемых бекапов СУБД;
+  * [twc_database_cluster](docs/resources/database_cluster.md) - кластер управляемой СУБД;
+  * [twc_database_instance](docs/resources/database_instance.md) - БД в управляемом кластере СУБД;
+  * [twc_database_user](docs/resources/database_user.md) - пользователь в управляемом кластере СУБД;
+  * [twc_database_backup](docs/resources/database_backup.md) - бекапы управляемых СУБД;
+  * [twc_database_backup_schedule](docs/resources/database_backup_schedule.md) - настройка автоматически создаваемых бекапов СУБД;
   * [twc_dns_rr](docs/resources/db_dns_rr.md) - ресурсные записи DNS;
   * [twc_k8s_cluster](docs/resources/k8s_cluster.md) - управляемый кластер K8S;
   * [twc_k8s_node_group](docs/resources/k8s_node_group.md) - группы узлов кластера K8S;
@@ -44,7 +42,8 @@ Terraform позволяет автоматизированно управлят
   * [twc_ssh_keys](docs/data-sources/ssh_keys.md) - SSH-ключи для установки на сервер;
   * [twc_s3_bucket](docs/data-sources/s3_bucket.md) - S3 хранилища;
   * [twc_s3_preset](docs/data-sources/s3_preset.md) - пресеты конфигураций S3 хранилища;
-  * [twc_db_preset](docs/data-sources/db_preset.md) - пресеты конфигураций баз данных;
+  * [twc_database_preset](docs/data-sources/database_preset.md) - пресеты конфигураций баз данных;
+  * [twc_database_cluster](docs/data-sources/database_cluster.md) - управляемые кластера СУБД;
   * [twc_dns_zone](docs/data-sources/dns_zone.md) - зоны DNS;
   * [twc_k8s_preset](docs/data-sources/k8s_preset.md) - пресеты конфигураций K8S кластера;
   * [twc_image](docs/data-sources/image.md) - образы для серверов;
