@@ -53,6 +53,7 @@ resource "twc_database_cluster" "example-mysql-8" {
 - `config_parameters` (Map of String) Configuration parameters for database cluster
 - `description` (String) Description for project
 - `hash_type` (String) Hash type for database
+- `is_external_ip` (Boolean) Flag that shows allowability database only by external IP address
 - `network` (Block List, Max: 1) Network for database cluster (see [below for nested schema](#nestedblock--network))
 - `project_id` (Number) Project ID for managed resource
 
@@ -71,7 +72,7 @@ resource "twc_database_cluster" "example-mysql-8" {
 
 Required:
 
-- `id` (Number) Network ID
+- `id` (String) Network ID
 
 
 <a id="nestedatt--disk_stats"></a>
