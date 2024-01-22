@@ -46,7 +46,7 @@ resource "twc_db_redis" "example-redis" {
 
 ### Optional
 
-- `is_external_ip` (Boolean) If this flag is set to true, then an external IP address will be attached to the database.
+- `is_external_ip` (Boolean) Flag that shows allowability database only by external IP address
 - `local_network` (Block List, Max: 1) Flag that enables local network for DB (see [below for nested schema](#nestedblock--local_network))
 - `login` (String) Login for database
 - `project_id` (Number) Project ID for created DB

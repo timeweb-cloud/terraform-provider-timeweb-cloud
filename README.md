@@ -31,6 +31,7 @@ Terraform позволяет автоматизированно управлят
   * [twc_firewall](docs/resources/firewall.md) - управляемый Firewall;
   * [twc_firewall_rule](docs/resources/firewall_rule.md) - правила управляемого Firewall;
   * [twc_vpc](docs/resources/vpc.md) - управляемый VPC;
+  * [twc_floating_ip](docs/resources/floating_ip.md) - плавающий IP-адрес;
 
 * Источники данных
 
@@ -47,6 +48,7 @@ Terraform позволяет автоматизированно управлят
   * [twc_dns_zone](docs/data-sources/dns_zone.md) - зоны DNS;
   * [twc_k8s_preset](docs/data-sources/k8s_preset.md) - пресеты конфигураций K8S кластера;
   * [twc_image](docs/data-sources/image.md) - образы для серверов;
+  * [twc_floating_ip](docs/data-sources/floating_ip.md) - плавающий IP-адрес;
 
 ## Быстрый старт
 

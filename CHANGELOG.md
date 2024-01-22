@@ -1,5 +1,19 @@
 # Changelog
 
+## [v1.3.0] - 22.01.2023
+
+### Added
+
+- Ресурс для управления плавающими IP-адресами
+- Источник данных для получения плавающих IP-адресов
+- Параметр `availability_zone` для ресурса `twc_server`
+- Параметр `availability_zone` для ресурса `twc_lb`
+- Параметр `availability_zone` для ресурса `twc_database_cluster`
+
+### Fixed
+
+- Исправлена 429 ошибка при удалении Firewall
+
 ## [v1.2.3] - 19.01.2023
 
 ### Fixed

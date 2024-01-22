@@ -16,6 +16,7 @@ Data source that provides bunch of useful parameters for filtering and suitable 
 
 ### Optional
 
+- `availability_zone` (String) Availability zone for database cluster
 - `id` (String) Database cluster ID
 - `location` (String) Location where database cluster was created
 - `name` (String) Name of specified database cluster
