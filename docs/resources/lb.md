@@ -74,6 +74,7 @@ resource "twc_lb_rule" "example-lb-rule" {
 ### Optional
 
 - `algo` (String) Algorithm for balancing
+- `availability_zone` (String) Availability zone for load balancer
 - `health_check` (Block List, Max: 1) (see [below for nested schema](#nestedblock--health_check))
 - `ips` (Set of String) Backends IPs
 - `is_keepalive` (Boolean) Keep alive connection from balancer to backend server
@@ -114,4 +115,3 @@ Required:
 Optional:
 
 - `ip` (String) Address in VPC subnetwork for manual assign
-

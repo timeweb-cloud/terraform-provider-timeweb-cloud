@@ -50,6 +50,7 @@ resource "twc_database_cluster" "example-mysql-8" {
 
 ### Optional
 
+- `availability_zone` (String) Availability zone for database cluster
 - `config_parameters` (Map of String) Configuration parameters for database cluster
 - `description` (String) Description for project
 - `hash_type` (String) Hash type for database

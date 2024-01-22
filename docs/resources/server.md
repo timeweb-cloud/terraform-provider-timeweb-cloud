@@ -155,6 +155,7 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 
 ### Optional
 
+- `availability_zone` (String) Availability zone for server
 - `bandwidth` (Number) Bandwidth for server
 - `cloud_init` (String) Cloud-init script
 - `comment` (String) Comment for server
