@@ -221,3 +221,5 @@ Success! The configuration is valid.
 Модули от сторонних разработчиков.
 
 - [terraform-timeweb-cloud-server](https://github.com/deff-dev/terraform-timeweb-cloud-server) — модуль для создания облачных серверов [[Terraform Registry](https://registry.terraform.io/modules/deff-dev/cloud-server/timeweb/latest)↗].
+- [terraform-timeweb-cloud-firewall](https://github.com/deff-dev/terraform-timeweb-cloud-firewall) — модуль для создания FireWall [[Terraform Registry](https://registry.terraform.io/modules/deff-dev/cloud-firewall/timeweb/latest)↗].
+- [terraform-twc-db-cluster](https://gitlab.com/denismaster/terraform-twc-db-cluster) — модуль для создания баз данных.
