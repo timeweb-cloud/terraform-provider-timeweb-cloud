@@ -24,7 +24,7 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
   description = "some example cluster"
 
   high_availability = false
-  version = "v1.22.17"
+  version = "v1.26.7"
   network_driver = "flannel"
   ingress = true
 
