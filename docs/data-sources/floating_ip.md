@@ -29,6 +29,6 @@ Data source that provides capability for filtering and selection floating ip. Al
 
 Optional:
 
-- `id` (Number) ID of resource that bind with floating IP Address
+- `id` (String) ID of resource that bind with floating IP Address
 - `type` (String) Type of resource that bind with floating IP Address
 
