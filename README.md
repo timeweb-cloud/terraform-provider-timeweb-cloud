@@ -25,7 +25,7 @@ Terraform позволяет автоматизированно управлят
   * [twc_database_user](docs/resources/database_user.md) - пользователь в управляемом кластере СУБД;
   * [twc_database_backup](docs/resources/database_backup.md) - бекапы управляемых СУБД;
   * [twc_database_backup_schedule](docs/resources/database_backup_schedule.md) - настройка автоматически создаваемых бекапов СУБД;
-  * [twc_dns_rr](docs/resources/db_dns_rr.md) - ресурсные записи DNS;
+  * [twc_dns_rr](docs/resources/dns_rr.md) - ресурсные записи DNS;
   * [twc_k8s_cluster](docs/resources/k8s_cluster.md) - управляемый кластер K8S;
   * [twc_k8s_node_group](docs/resources/k8s_node_group.md) - группы узлов кластера K8S;
   * [twc_firewall](docs/resources/firewall.md) - управляемый Firewall;
