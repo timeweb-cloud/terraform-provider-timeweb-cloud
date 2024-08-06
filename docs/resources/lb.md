@@ -115,3 +115,4 @@ Required:
 Optional:
 
 - `ip` (String) Address in VPC subnetwork for manual assign
+

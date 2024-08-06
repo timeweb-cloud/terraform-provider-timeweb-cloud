@@ -157,9 +157,10 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 
 - `availability_zone` (String) Availability zone for server
 - `bandwidth` (Number) Bandwidth for server
-- `cloud_init` (String) Cloud-init script
+- `cloud_init` (String) Cloud-init script. If script requires external network you should use floating_ip_id field instead of twc_floating_ip.resource
 - `comment` (String) Comment for server
 - `configuration` (Block List, Max: 1) Configuration for server (see [below for nested schema](#nestedblock--configuration))
+- `floating_ip_id` (String) Floating IP ID for server
 - `image_id` (String) Image ID for servers (not supported for cloned servers)
 - `local_network` (Block List, Max: 1) Flag that enables local network for created server (not supported for cloned servers) (see [below for nested schema](#nestedblock--local_network))
 - `os_id` (Number) OS ID for server (not supported for cloned servers)
