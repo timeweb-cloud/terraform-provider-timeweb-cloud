@@ -55,5 +55,5 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 - `id` (String) The ID of this resource.
 - `kubeconfig` (String, Sensitive) K8S cluster kubeconfig
 - `ram` (Number) Sum of RAM count of all worker nodes
-- `status` (String) Current status of K8S cluster (`installing`, `provisioning`, `active`, `unpaid`)
+- `status` (String) Current status of K8S cluster (`installing`, `provisioning`, `active`, `unpaid`, `started`, `not_installed`, `failed`, `unpaid_not_installed`, `deletion`)
 
