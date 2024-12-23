@@ -26,6 +26,7 @@ Data source that provides bunch of useful parameters for filtering and suitable 
 
 - `description` (String) Description of specified database cluster
 - `disk_stats` (List of Object) Information about database disk stats (see [below for nested schema](#nestedatt--disk_stats))
+- `is_external_ip` (Boolean) Flag that shows allowability database only by external IP address
 - `networks` (List of Object) (see [below for nested schema](#nestedatt--networks))
 - `parameters` (Map of String) Configuration parameters for database cluster
 - `port` (Number) Listening port for incoming connections
