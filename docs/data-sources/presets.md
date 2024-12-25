@@ -44,6 +44,7 @@ resource "twc_server" "example-server" {
 
 ### Optional
 
+- `availability_zone` (String) Availability zone for preset
 - `bandwidth` (Number) Network bandwidth capacity of specified preset
 - `cpu` (Number) CPU count of specified preset
 - `cpu_frequency` (String) CPU frequency for the created server (`3.3`)
