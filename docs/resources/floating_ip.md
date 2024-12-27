@@ -87,7 +87,7 @@ resource "twc_floating_ip" "example-floating-ip" {
 Required:
 
 - `id` (String) ID of resource that bind with floating IP Address
-- `type` (String) Type of resource that bind with floating IP Address (`server`, `balancer`, `database`)
+- `type` (String) Type of resource that bind with floating IP Address (`server`, `balancer`, `dbaas`)
 
 ## Import
 
