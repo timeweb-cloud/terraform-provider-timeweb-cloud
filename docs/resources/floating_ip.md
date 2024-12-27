@@ -89,3 +89,11 @@ Required:
 - `id` (String) ID of resource that bind with floating IP Address
 - `type` (String) Type of resource that bind with floating IP Address (`server`, `balancer`, `database`)
 
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Floating IP can be imported by specifying the identifier (from URL)
+terraform import twc_server.example 968769c4-06ac-4b37-8e21-1fc8ff6c5a9b
+```

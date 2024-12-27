@@ -86,5 +86,5 @@ resource "twc_server" "vds-with-preset-2" {
 Required:
 
 - `id` (String) Resource ID
-- `type` (String) Resource type
+- `type` (String) Resource type [server, dbaas, balancer]
 
