@@ -57,6 +57,7 @@ resource "twc_database_cluster" "example-mysql-8" {
 - `is_external_ip` (Boolean) Flag that shows allowability database only by external IP address
 - `network` (Block List, Max: 1) Network for database cluster (see [below for nested schema](#nestedblock--network))
 - `project_id` (Number) Project ID for managed resource
+- `replications` (Number) Number of replication instances
 
 ### Read-Only
 
