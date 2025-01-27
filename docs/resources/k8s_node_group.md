@@ -57,6 +57,12 @@ resource "twc_k8s_node_group" "example-k8s-node-group" {
 - `node_count` (Number) Count of nodes in group
 - `preset_id` (Number) Preset ID for nodes in group
 
+### Optional
+
+- `is_autoscaling` (Boolean) Automatic increase/decrease of the number of nodes in a group depending on the load
+- `max_size` (Number) max count of nodes in group
+- `min_size` (Number) min count of nodes in group
+
 ### Read-Only
 
 - `id` (String) The ID of this resource.
