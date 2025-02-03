@@ -42,8 +42,9 @@ resource "twc_server" "example-server" {
 ### Optional
 
 - `cpu_frequency` (String) CPU frequency for the created server (`3.3`)
-- `disk_type` (String) Disk type for the created server (`ssd`, `nvme`, `hdd`)
+- `disk_type` (String, Deprecated) Disk type for the created server (`ssd`, `nvme`, `hdd`)
 - `location` (String) Location for the created server (`ru-1`, `ru-2`, `pl-1`, `kz-1`). When server was created all new presets or configuration may be only chosen from same location
+- `preset_type` (String) Preset type for the created server (`premium`, `standard`, `gpu`, `dedicated_cpu`)
 
 ### Read-Only
 
@@ -61,6 +62,9 @@ Read-Only:
 - `disk_max` (Number) Maximum allowed disk size
 - `disk_min` (Number) Minimum allowed disk size
 - `disk_step` (Number) Step between allowed disk sizes
+- `gpu_max` (Number) Maximum allowed GPU count
+- `gpu_min` (Number) Minimum allowed GPU count
+- `gpu_step` (Number) Step between allowed GPU counts
 - `network_bandwidth_max` (Number) Maximum allowed network bandwidth capacity
 - `network_bandwidth_min` (Number) Minimum allowed network bandwidth capacity
 - `network_bandwidth_step` (Number) Step between allowed network bandwidth capacities

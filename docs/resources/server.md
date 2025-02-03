@@ -200,6 +200,10 @@ Required:
 - `disk` (Number) Disk size for created server
 - `ram` (Number) RAM size for created server (must be divisible by 1024 and corresponds OS, software and configurator requirements)
 
+Optional:
+
+- `gpu` (Number) GPU count for created server
+
 
 <a id="nestedblock--local_network"></a>
 ### Nested Schema for `local_network`
