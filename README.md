@@ -10,6 +10,7 @@ Terraform позволяет автоматизированно управлят
 
 * Ресурсы
 
+  * [twc_network_drive](docs/resources/network_drive.md) - сетевые диски;
   * [twc_server](docs/resources/server.md) - сервер;
   * [twc_server_ip](docs/resources/server_ip.md) - дополнительный IP адрес для сервера;
   * [twc_server_disk](docs/resources/server_disk.md) - дополнительный диск для сервера;
@@ -35,6 +36,8 @@ Terraform позволяет автоматизированно управлят
 
 * Источники данных
 
+  * [twc_network_drive_preset](docs/data-sources/configurator.md) - пресеты сетевых дисков;
+  * [twc_network_drive](docs/data-sources/configurator.md) - сетевые диски аккаунта;
   * [twc_configurator](docs/data-sources/configurator.md) - конфигураторы для ручного выбора требуемых ресурсов VDS;
   * [twc_os](docs/data-sources/os.md) - ОС для установки на сервер;
   * [twc_presets](docs/data-sources/presets.md) - пресеты конфигураций сервера;
