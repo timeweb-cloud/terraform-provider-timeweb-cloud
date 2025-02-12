@@ -36,8 +36,8 @@ Terraform позволяет автоматизированно управлят
 
 * Источники данных
 
-  * [twc_network_drive_preset](docs/data-sources/configurator.md) - пресеты сетевых дисков;
-  * [twc_network_drive](docs/data-sources/configurator.md) - сетевые диски аккаунта;
+  * [twc_network_drive_preset](docs/data-sources/network_drive_preset.md) - пресеты сетевых дисков;
+  * [twc_network_drive](docs/data-sources/network_drive.md) - сетевые диски аккаунта;
   * [twc_configurator](docs/data-sources/configurator.md) - конфигураторы для ручного выбора требуемых ресурсов VDS;
   * [twc_os](docs/data-sources/os.md) - ОС для установки на сервер;
   * [twc_presets](docs/data-sources/presets.md) - пресеты конфигураций сервера;
