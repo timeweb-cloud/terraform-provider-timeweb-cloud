@@ -2,12 +2,12 @@
 page_title: "twc_database_cluster Data Source - Timeweb Cloud"
 subcategory: ""
 description: |-
-  Data source that provides bunch of useful parameters for filtering and suitable database cluster selection. All parameters are filters, so you can use only needed. Available OS may be retrieved from API https://api.timeweb.cloud/api/v1/databaseclusters
+  Data source that provides bunch of useful parameters for filtering and suitable database cluster selection. All parameters are filters, so you can use only needed. Available DB types may be retrieved from API https://api.timeweb.cloud/api/v1/database-types
 ---
 
 # twc_database_cluster (Data Source)
 
-Data source that provides bunch of useful parameters for filtering and suitable database cluster selection. All parameters are filters, so you can use only needed. Available OS [may be retrieved from API](https://api.timeweb.cloud/api/v1/databaseclusters)
+Data source that provides bunch of useful parameters for filtering and suitable database cluster selection. All parameters are filters, so you can use only needed. Available DB types [may be retrieved from API](https://api.timeweb.cloud/api/v1/database-types)
 
 
 
@@ -20,7 +20,7 @@ Data source that provides bunch of useful parameters for filtering and suitable 
 - `id` (String) Database cluster ID
 - `location` (String) Location where database cluster was created
 - `name` (String) Name of specified database cluster
-- `type` (String) OS of specified database cluster
+- `type` (String) Type of specified database cluster
 
 ### Read-Only
 
