@@ -46,6 +46,7 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 - `description` (String) Description for K8S cluster
 - `high_availability` (Boolean) High Availability for K8S cluster
 - `ingress` (Boolean) Add ingress for K8S cluster
+- `network_id` (String) ID of VPC for K8S cluster
 - `project_id` (Number) Project ID for K8S cluster
 
 ### Read-Only
