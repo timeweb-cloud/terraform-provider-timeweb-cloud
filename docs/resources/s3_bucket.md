@@ -37,16 +37,18 @@ resource "twc_s3_bucket" "example-s3-bucket" {
 ### Required
 
 - `name` (String) Name for S3 bucket
-- `preset_id` (Number) Preset ID for S3 bucket
 - `type` (String) Type for S3 bucket (`private`, `public`)
 
 ### Optional
 
+- `configuration` (Block List, Max: 1) Configuration for server (see [below for nested schema](#nestedblock--configuration))
+- `preset_id` (Number) Preset ID for S3 bucket. Cannot be used with (conflicts with configuration)
 - `project_id` (Number) Project ID for created S3 bucket
 
 ### Read-Only
 
 - `access_key` (String, Sensitive) Key for access via S3-compatible clients
+- `configurator_id` (Number) Configurator identifier
 - `disk_stats` (List of Object) Information about storage disk stats (see [below for nested schema](#nestedatt--disk_stats))
 - `full_name` (String) Full name for S3 bucket (with random prefix)
 - `hostname` (String) Hostname for access via S3-compatible clients
@@ -55,6 +57,15 @@ resource "twc_s3_bucket" "example-s3-bucket" {
 - `object_amount` (Number) Stored objects amount
 - `secret_key` (String, Sensitive) Secret for access via S3-compatible clients
 - `status` (String) Current status of S3 bucket (`no_paid`, `created`, `transfer`)
+
+<a id="nestedblock--configuration"></a>
+### Nested Schema for `configuration`
+
+Required:
+
+- `configurator_id` (Number) Configurator ID for S3 Strorage
+- `disk` (Number) Disk size for S3 Storage
+
 
 <a id="nestedatt--disk_stats"></a>
 ### Nested Schema for `disk_stats`
