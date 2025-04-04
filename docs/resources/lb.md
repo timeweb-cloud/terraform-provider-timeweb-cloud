@@ -77,6 +77,7 @@ resource "twc_lb_rule" "example-lb-rule" {
 - `availability_zone` (String) Availability zone for load balancer
 - `client_timeout` (Number) Client timeout
 - `connect_timeout` (Number) Connection timeout
+- `floating_ip_id` (String) Floating IP ID for server
 - `health_check` (Block List, Max: 1) (see [below for nested schema](#nestedblock--health_check))
 - `httprequest_timeout` (Number) Http request timeout
 - `ips` (Set of String) Backends IPs
