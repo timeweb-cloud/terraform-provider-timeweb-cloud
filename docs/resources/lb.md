@@ -75,14 +75,19 @@ resource "twc_lb_rule" "example-lb-rule" {
 
 - `algo` (String) Algorithm for balancing
 - `availability_zone` (String) Availability zone for load balancer
+- `client_timeout` (Number) Client timeout
+- `connect_timeout` (Number) Connection timeout
 - `health_check` (Block List, Max: 1) (see [below for nested schema](#nestedblock--health_check))
+- `httprequest_timeout` (Number) Http request timeout
 - `ips` (Set of String) Backends IPs
 - `is_keepalive` (Boolean) Keep alive connection from balancer to backend server
 - `is_ssl` (Boolean) Automatic redirect HTTP to HTTPS
 - `is_sticky` (Boolean) Save user session for balancing to same backend server
 - `is_use_proxy` (Boolean) Use PROXY-protocol for communicating with backend server
 - `local_network` (Block List, Max: 1) Flag that enables local network for load balancer (see [below for nested schema](#nestedblock--local_network))
+- `maxconn` (Number) Maximum number of connections to backend server
 - `project_id` (Number) Project ID for created balancer
+- `server_timeout` (Number) Server timeout
 
 ### Read-Only
 
