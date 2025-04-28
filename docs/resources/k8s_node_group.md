@@ -60,10 +60,30 @@ resource "twc_k8s_node_group" "example-k8s-node-group" {
 ### Optional
 
 - `is_autoscaling` (Boolean) Automatic increase/decrease of the number of nodes in a group depending on the load
+- `labels` (Block List) K8S node group labels (see [below for nested schema](#nestedblock--labels))
 - `max_size` (Number) max count of nodes in group
 - `min_size` (Number) min count of nodes in group
+- `taints` (Block List) K8S node group taints (see [below for nested schema](#nestedblock--taints))
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
+
+<a id="nestedblock--labels"></a>
+### Nested Schema for `labels`
+
+Required:
+
+- `key` (String) K8S node group label key
+- `value` (String) K8S node group label value
+
+
+<a id="nestedblock--taints"></a>
+### Nested Schema for `taints`
+
+Required:
+
+- `effect` (String) K8S node group taint effect
+- `key` (String) K8S node group taint key
+- `value` (String) K8S node group taint value
 
