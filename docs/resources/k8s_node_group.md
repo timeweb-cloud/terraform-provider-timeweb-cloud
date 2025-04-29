@@ -55,19 +55,35 @@ resource "twc_k8s_node_group" "example-k8s-node-group" {
 - `cluster_id` (Number) K8S cluster ID for which node group should be created
 - `name` (String) K8S node group name
 - `node_count` (Number) Count of nodes in group
-- `preset_id` (Number) Preset ID for nodes in group
 
 ### Optional
 
+- `configuration` (Block List, Max: 1) Configuration node group workers (see [below for nested schema](#nestedblock--configuration))
 - `is_autoscaling` (Boolean) Automatic increase/decrease of the number of nodes in a group depending on the load
 - `labels` (Block List) K8S node group labels (see [below for nested schema](#nestedblock--labels))
 - `max_size` (Number) max count of nodes in group
 - `min_size` (Number) min count of nodes in group
+- `preset_id` (Number) Preset ID for nodes in group
 - `taints` (Block List) K8S node group taints (see [below for nested schema](#nestedblock--taints))
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
+
+<a id="nestedblock--configuration"></a>
+### Nested Schema for `configuration`
+
+Required:
+
+- `configurator_id` (Number) Configurator ID for creating group node workers
+- `cpu` (Number) CPU count for node group
+- `disk` (Number) Disk node group size
+- `ram` (Number) RAM node group worker size
+
+Optional:
+
+- `gpu` (Number) GPU count for node group
+
 
 <a id="nestedblock--labels"></a>
 ### Nested Schema for `labels`
