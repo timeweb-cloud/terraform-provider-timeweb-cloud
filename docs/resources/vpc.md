@@ -14,10 +14,10 @@ Resource for describing needed VPN and provides actual information about its sta
 ```terraform
 # Example VPC network
 resource "twc_vpc" "example-vpc" {
-  name = "Example VPC"
+  name        = "Example VPC"
   description = "Some example VPC"
-  subnet_v4 = "192.168.0.0/24"
-  location = "ru-1"
+  subnet_v4   = "192.168.0.0/24"
+  location    = "ru-1"
 }
 
 
@@ -26,18 +26,18 @@ resource "twc_vpc" "example-vpc" {
 data "twc_presets" "example-preset" {
   price_filter {
     from = 300
-    to = 400
+    to   = 400
   }
 }
 
 data "twc_os" "example-os" {
-  name = "ubuntu"
+  name    = "ubuntu"
   version = "22.04"
 }
 
 # With VPC network
 resource "twc_server" "example-server-with-local-network" {
-  name = "Example server with local network"
+  name  = "Example server with local network"
   os_id = data.twc_os.example-os.id
 
   preset_id = data.twc_presets.example-preset.id
@@ -49,7 +49,7 @@ resource "twc_server" "example-server-with-local-network" {
 
 # With VPC network and specified ID IP
 resource "twc_server" "example-server-with-local-network-and-address" {
-  name = "Example server with local network and address"
+  name  = "Example server with local network and address"
   os_id = data.twc_os.example-os.id
 
   preset_id = data.twc_presets.example-preset.id
@@ -61,47 +61,28 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 }
 
 ### Example database with VPC network
-
-data "twc_db_preset" "example-db-postgres-preset" {
+data "twc_database_preset" "example-db-preset-redis-7" {
   location = "ru-1"
 
-  type = "postgres"
+  type = "redis"
+
+  disk = 8 * 1024
 
   price_filter {
     from = 100
-    to = 200
+    to   = 500
   }
 }
 
-resource "twc_db_postgres" "example-postgres" {
-  name = "example_postgres"
+resource "twc_database_cluster" "example-redis-7" {
+  name = "example_redis7"
 
-  login = "example_login"
-  password = "example_password"
+  type = "redis7"
 
-  preset_id = data.twc_db_preset.example-db-postgres-preset.id
+  preset_id = data.twc_database_preset.example-db-preset-redis-7.id
 
-  autovacuum_analyze_scale_factor = 0.001
-  bgwriter_delay = 101
-  bgwriter_lru_maxpages = 102
-  deadlock_timeout = 103
-  gin_pending_list_limit = 104
-  idle_in_transaction_session_timeout = 115
-  idle_session_timeout = 106
-  join_collapse_limit = 107
-  lock_timeout = 108
-  max_prepared_transactions = 109
-  max_connections = 110
-  shared_buffers = 111
-  wal_buffers = 112
-  temp_buffers = 113
-  work_mem = 114
-
-  is_external_ip = true
-
-  local_network {
+  network {
     id = twc_vpc.example-vpc.id
-    ip = "192.168.0.14"
   }
 }
 
@@ -112,7 +93,7 @@ data "twc_lb_preset" "example-lb-preset" {
 
   price_filter {
     from = 100
-    to = 200
+    to   = 200
   }
 }
 
@@ -121,9 +102,9 @@ resource "twc_lb" "example-lb" {
 
   algo = "roundrobin"
 
-  is_sticky = false
+  is_sticky    = false
   is_use_proxy = false
-  is_ssl = false
+  is_ssl       = false
   is_keepalive = false
 
   health_check {
@@ -133,10 +114,10 @@ resource "twc_lb" "example-lb" {
 
     path = "/lala"
 
-    inter = 10
+    inter   = 10
     timeout = 5
-    fall = 3
-    rise = 2
+    fall    = 3
+    rise    = 2
   }
 
   ips = []
