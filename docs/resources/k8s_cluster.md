@@ -38,15 +38,16 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 
 - `name` (String) Name for K8S cluster
 - `network_driver` (String) Network driver for K8S cluster [may be retrieved from API](https://api.timeweb.cloud/api/v1/k8s/network_drivers)
-- `preset_id` (Number) Preset ID for K8S cluster
 - `version` (String) K8S version [may be retrieved from API](https://api.timeweb.cloud/api/v1/k8s/k8s_versions)
 
 ### Optional
 
+- `configuration` (Block List, Max: 1) Configuration for master nodes (see [below for nested schema](#nestedblock--configuration))
 - `description` (String) Description for K8S cluster
 - `high_availability` (Boolean) High Availability for K8S cluster
 - `ingress` (Boolean) Add ingress for K8S cluster
 - `network_id` (String) ID of VPC for K8S cluster
+- `preset_id` (Number) Preset ID for nodes in group
 - `project_id` (Number) Project ID for K8S cluster
 
 ### Read-Only
@@ -57,4 +58,14 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 - `kubeconfig` (String, Sensitive) K8S cluster kubeconfig
 - `ram` (Number) Sum of RAM count of all worker nodes
 - `status` (String) Current status of K8S cluster (`installing`, `provisioning`, `active`, `unpaid`, `started`, `not_installed`, `failed`, `unpaid_not_installed`, `deletion`)
+
+<a id="nestedblock--configuration"></a>
+### Nested Schema for `configuration`
+
+Required:
+
+- `configurator_id` (Number) Configurator ID for creating nodes
+- `cpu` (Number) CPU count for node group
+- `disk` (Number) Disk node group size
+- `ram` (Number) RAM node group worker size
 
