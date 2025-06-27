@@ -59,6 +59,7 @@ resource "twc_k8s_node_group" "example-k8s-node-group" {
 ### Optional
 
 - `configuration` (Block List, Max: 1) Configuration node group workers (see [below for nested schema](#nestedblock--configuration))
+- `is_autohealing` (Boolean) Automatic recreating failed nodes
 - `is_autoscaling` (Boolean) Automatic increase/decrease of the number of nodes in a group depending on the load
 - `labels` (Block List) K8S node group labels (see [below for nested schema](#nestedblock--labels))
 - `max_size` (Number) max count of nodes in group
