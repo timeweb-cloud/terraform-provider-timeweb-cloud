@@ -38,7 +38,7 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 
 - `name` (String) Name for K8S cluster
 - `network_driver` (String) Network driver for K8S cluster [may be retrieved from API](https://api.timeweb.cloud/api/v1/k8s/network_drivers)
-- `version` (String) K8S version [may be retrieved from API](https://api.timeweb.cloud/api/v1/k8s/k8s_versions)
+- `version` (String) K8S version [may be retrieved from API](https://api.timeweb.cloud/api/v1/k8s/k8s_versions). If your version is outdated, we will take the latest patch of provided version! You need to check your version after cluster installation!
 
 ### Optional
 
