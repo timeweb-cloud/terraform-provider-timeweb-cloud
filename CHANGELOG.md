@@ -1,6 +1,6 @@
 # Changelog
 
-# [v1.6.5] - 18.09.2025
+# [v1.6.6] - 18.09.2025
 ## Fixed
 * Изменение значений для min/max size для autoscaling k8s
 
