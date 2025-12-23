@@ -161,6 +161,7 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 - `comment` (String) Comment for server
 - `configuration` (Block List, Max: 1) Configuration for server (see [below for nested schema](#nestedblock--configuration))
 - `floating_ip_id` (String) Floating IP ID for server
+- `hostname` (String) Hostname of the server
 - `image_id` (String) Image ID for servers (not supported for cloned servers)
 - `is_root_password_required` (Boolean) Is root password required for server
 - `local_network` (Block List, Max: 1) Flag that enables local network for created server (not supported for cloned servers) (see [below for nested schema](#nestedblock--local_network))
