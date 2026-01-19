@@ -46,7 +46,9 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 - `description` (String) Description for K8S cluster
 - `high_availability` (Boolean) High Availability for K8S cluster
 - `ingress` (Boolean) Add ingress for K8S cluster
+- `maintenance_slot` (Block List) Maintenance window for cluster (see [below for nested schema](#nestedblock--maintenance_slot))
 - `network_id` (String) ID of VPC for K8S cluster
+- `oidc_provider` (Block List) OIDC provider settings for cluster (see [below for nested schema](#nestedblock--oidc_provider))
 - `preset_id` (Number) Preset ID for nodes in group
 - `project_id` (Number) Project ID for K8S cluster
 
@@ -68,4 +70,36 @@ Required:
 - `cpu` (Number) CPU count for node group
 - `disk` (Number) Disk node group size
 - `ram` (Number) RAM node group worker size
+
+
+<a id="nestedblock--maintenance_slot"></a>
+### Nested Schema for `maintenance_slot`
+
+Required:
+
+- `type` (String) Maintenance slot type
+
+Optional:
+
+- `from` (String) May start from this time (HH:MM format)
+- `to` (String) May end to this time (HH:MM). Notice: The actual duration depends on the number of nodes in the cluster.
+
+
+<a id="nestedblock--oidc_provider"></a>
+### Nested Schema for `oidc_provider`
+
+Required:
+
+- `client_id` (String) Unique identifier by authentication server
+- `issuer_url` (String) OIDC Provider URL
+- `name` (String) Name for OIDC provider setting
+
+Optional:
+
+- `groups_claim` (String)
+- `username_claim` (String) Name of the field in the ID token that the OIDC authentication system uses as the username
+
+Read-Only:
+
+- `status` (String)
 
