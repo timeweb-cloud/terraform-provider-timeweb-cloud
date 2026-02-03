@@ -19,7 +19,7 @@ Data source that provides bunch of useful parameters for filtering and suitable 
 - `cpu` (Number) CPU count of specified preset
 - `description_short` (String) Short description of specified preset
 - `disk` (Number) Disk size of specified preset
-- `location` (String) Location for the created storage (`ru-1`, `ru-2`, `pl-1`, `kz-1`). When storage was created all new presets or configuration may be only chosen from same location
+- `location` (String) Location for the created storage (`ru-1`, `ru-2`, `de-1`, `kz-1`). When storage was created all new presets or configuration may be only chosen from same location
 - `price_filter` (Block List, Max: 1) Price filter for select preset in specified price range (see [below for nested schema](#nestedblock--price_filter))
 - `ram` (Number) RAM size of specified preset
 - `type` (String) Type of database (`mysql`, `mysql5`, `postgres`, `redis`, `mongodb`)

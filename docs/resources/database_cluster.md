@@ -63,7 +63,7 @@ resource "twc_database_cluster" "example-mysql-8" {
 
 - `disk_stats` (List of Object) Information about database disk stats (see [below for nested schema](#nestedatt--disk_stats))
 - `id` (String) The ID of this resource.
-- `location` (String) Location for the server (`ru-1`, `ru-2`, `pl-1`, `kz-1`, etc.)
+- `location` (String) Location for the server (`ru-1`, `ru-2`, `de-1`, `kz-1`, etc.)
 - `networks` (List of Object) (see [below for nested schema](#nestedatt--networks))
 - `parameters` (Map of String) Configuration parameters for database cluster
 - `port` (Number) Listening port for incoming connections

@@ -182,7 +182,7 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 - `disks` (List of Object) Current server disks representation (see [below for nested schema](#nestedatt--disks))
 - `id` (String) The ID of this resource.
 - `is_ddos_guard` (Boolean) Flag that shows status of DDoS guard service
-- `location` (String) Location for the server (`ru-1`, `ru-2`, `pl-1`, `kz-1`)
+- `location` (String) Location for the server (`ru-1`, `ru-2`, `de-1`, `kz-1`)
 - `main_ipv4` (String) Main IPv4 address from public interface
 - `networks` (List of Object) (see [below for nested schema](#nestedatt--networks))
 - `os` (List of Object) Information about specified OS (see [below for nested schema](#nestedatt--os))

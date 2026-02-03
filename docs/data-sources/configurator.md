@@ -43,7 +43,7 @@ resource "twc_server" "example-server" {
 
 - `cpu_frequency` (String) CPU frequency for the created server (`3.3`)
 - `disk_type` (String, Deprecated) Disk type for the created server (`ssd`, `nvme`, `hdd`)
-- `location` (String) Location for the created server (`ru-1`, `ru-2`, `pl-1`, `kz-1`). When server was created all new presets or configuration may be only chosen from same location
+- `location` (String) Location for the created server (`ru-1`, `ru-2`, `de-1`, `kz-1`). When server was created all new presets or configuration may be only chosen from same location
 - `preset_type` (String) Preset type for the created server (`premium`, `standard`, `gpu`, `dedicated_cpu`)
 
 ### Read-Only

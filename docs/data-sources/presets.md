@@ -52,7 +52,7 @@ resource "twc_server" "example-server" {
 - `disk` (Number) Disk size of specified preset
 - `disk_type` (String, Deprecated) Disk type for the created server (`ssd`, `nvme`, `hdd`)
 - `is_allowed_local_network` (Boolean) Flag that shows allowability local networks for specified preset
-- `location` (String) Location for the created server (`ru-1`, `ru-2`, `pl-1`, `kz-1`). When server was created all new presets or configuration may be only chosen from same location
+- `location` (String) Location for the created server (`ru-1`, `ru-2`, `de-1`, `kz-1`). When server was created all new presets or configuration may be only chosen from same location
 - `preset_type` (String) Preset type for the created server (`premium`, `standard`, `high_cpu`)
 - `price_filter` (Block List, Max: 1) Price filter for select preset in specified price range (see [below for nested schema](#nestedblock--price_filter))
 - `ram` (Number) RAM size of specified preset

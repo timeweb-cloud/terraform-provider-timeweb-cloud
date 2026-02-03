@@ -30,7 +30,7 @@ data "twc_lb_preset" "example-lb-preset" {
 
 - `bandwidth` (Number) Network bandwidth capacity of specified preset
 - `description_short` (String) Short description of specified preset
-- `location` (String) Location for the created storage (`ru-1`, `ru-2`, `pl-1`, `kz-1`). When storage was created all new presets or configuration may be only chosen from same location
+- `location` (String) Location for the created storage (`ru-1`, `ru-2`, `de-1`, `kz-1`). When storage was created all new presets or configuration may be only chosen from same location
 - `price_filter` (Block List, Max: 1) Price filter for select preset in specified price range (see [below for nested schema](#nestedblock--price_filter))
 - `replica_count` (Number) Replicas
 - `requests_per_second` (String) Maximum load that balancer may perform
