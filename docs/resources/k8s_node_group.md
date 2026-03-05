@@ -65,7 +65,9 @@ resource "twc_k8s_node_group" "example-k8s-node-group" {
 - `max_size` (Number) max count of nodes in group
 - `min_size` (Number) min count of nodes in group
 - `preset_id` (Number) Preset ID for nodes in group
+- `public_ip_enabled` (Boolean) param that shows will any node has public ip
 - `taints` (Block List) K8S node group taints (see [below for nested schema](#nestedblock--taints))
+- `virtual_router_id` (String) Virtual router id that node group should use
 
 ### Read-Only
 

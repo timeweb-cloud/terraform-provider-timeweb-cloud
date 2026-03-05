@@ -17,7 +17,7 @@ Configurator data source that provides information about available hardware para
 ### Optional
 
 - `cpu_frequency` (String) CPU frequency for the created server (`3.3`)
-- `location` (String) Location for the created server (`ru-1`, `ru-2`, `pl-1`, `kz-1`). When server was created all new presets or configuration may be only chosen from same location
+- `location` (String) Location for the created server (`ru-1`, `ru-2`, `de-1`, `kz-1`). When server was created all new presets or configuration may be only chosen from same location
 - `node_type` (String) Node type (`master`, `worker`)
 - `preset_type` (String) Preset type for created node ()
 
