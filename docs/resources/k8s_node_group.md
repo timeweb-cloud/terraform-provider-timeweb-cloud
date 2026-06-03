@@ -2,12 +2,12 @@
 page_title: "twc_k8s_node_group Resource - Timeweb Cloud"
 subcategory: ""
 description: |-
-  Resource for describing needed node group in K8S cluster
+  Resource for describing needed node group in K8S cluster. Import ID: CLUSTERID/NODEGROUP_ID.
 ---
 
 # twc_k8s_node_group (Resource)
 
-Resource for describing needed node group in K8S cluster
+Resource for describing needed node group in K8S cluster. Import ID: CLUSTER_ID/NODE_GROUP_ID.
 
 ## Примеры использования
 

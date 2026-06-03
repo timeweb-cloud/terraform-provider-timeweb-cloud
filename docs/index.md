@@ -193,4 +193,4 @@ provider "twc" {
 
 ### Optional
 
-- `token` (String) Secret API token from https://timeweb.cloud/my/api-keys
+- `token` (String, Sensitive) Secret API token from https://timeweb.cloud/my/api-keys

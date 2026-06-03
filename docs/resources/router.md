@@ -38,7 +38,7 @@ Resource for describing virtual router
 
 Required:
 
-- `network_name` (String) Name of the network managed by router (exactly you should place here pvc's id)
+- `id` (String) Id of the network managed by router (exactly you should place here pvc's id)
 
 Optional:
 
@@ -58,7 +58,7 @@ Optional:
 
 Required:
 
-- `network_name` (String) Name (id) of the network which you should provide for router nat ipv4 to be bound with local-network
+- `id` (String) Id of the network which you should provide for router nat ipv4 to be bound with local-network
 
 
 
