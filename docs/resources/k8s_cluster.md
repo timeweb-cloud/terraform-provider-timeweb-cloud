@@ -51,6 +51,7 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 - `oidc_provider` (Block List) OIDC provider settings for cluster (see [below for nested schema](#nestedblock--oidc_provider))
 - `preset_id` (Number) Preset ID for nodes in group
 - `project_id` (Number) Project ID for K8S cluster
+- `virtual_router_id` (String) ID of virtual router for K8S cluster. Must be set together with `network_id`. If you want to unbound router from cluster, you should change node groups (delete virtual_router_id, set public_ip_enabled = true) for every group, wait until it done, after you should unbound cluster and after delete router
 
 ### Read-Only
 

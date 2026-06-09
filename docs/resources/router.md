@@ -23,7 +23,6 @@ Resource for describing virtual router
 
 - `comment` (String) Comment for creating router
 - `ips` (Block List) (see [below for nested schema](#nestedblock--ips))
-- `parent_services` (Block List, Max: 1) Param that indicated with which resource router will be used (for example: K8S worker-nodes) (see [below for nested schema](#nestedblock--parent_services))
 - `project_id` (Number) Id that allow you to attach router to project
 - `timeouts` (Block, Optional) (see [below for nested schema](#nestedblock--timeouts))
 
@@ -60,15 +59,6 @@ Required:
 
 - `id` (String) Id of the network which you should provide for router nat ipv4 to be bound with local-network
 
-
-
-<a id="nestedblock--parent_services"></a>
-### Nested Schema for `parent_services`
-
-Required:
-
-- `id` (Number) Id of parent service (for example - K8S cluster)
-- `type` (String)
 
 
 <a id="nestedblock--timeouts"></a>
