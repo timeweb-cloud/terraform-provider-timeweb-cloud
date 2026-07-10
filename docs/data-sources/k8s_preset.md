@@ -14,18 +14,18 @@ Data source that provides bunch of useful parameters for filtering and suitable 
 ```terraform
 # Select preset for K8S master node with 4 CPUs and price between 1000 and 2000
 data "twc_k8s_preset" "example-k8s-preset-master" {
-  cpu = 4
+  cpu  = 4
   type = "master"
 
   price_filter {
     from = 1000
-    to = 2000
+    to   = 2000
   }
 }
 
 # Select preset for K8S node group with 2 CPUs
 data "twc_k8s_preset" "example-k8s-preset-worker" {
-  cpu = 2
+  cpu  = 2
   type = "worker"
 }
 ```
@@ -38,7 +38,7 @@ data "twc_k8s_preset" "example-k8s-preset-worker" {
 - `cpu` (Number) CPU count of specified preset
 - `description_short` (String) Short description of specified preset
 - `disk` (Number) Disk size of specified preset
-- `location` (String) Location for k8s preset (`ru-1`, `ru-3`, `nl-1`). Master and worker should be in one location
+- `location` (String) Location for k8s preset. Code location map to availability zone: `ru-1` — SPB (spb-3), `ru-3` — MSK (msk-1), `nl-1` — AMS (ams-1). Master and worker should be in one location
 - `network` (Number) Network bandwidth capacity of specified preset
 - `price_filter` (Block List, Max: 1) Price filter for select preset in specified price range (see [below for nested schema](#nestedblock--price_filter))
 - `ram` (Number) RAM size of specified preset

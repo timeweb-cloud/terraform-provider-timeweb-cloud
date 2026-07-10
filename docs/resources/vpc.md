@@ -12,16 +12,16 @@ Resource for describing needed VPN and provides actual information about its sta
 ## Примеры использования
 
 ```terraform
-# Example VPC network
+# Private network (VPC)
 resource "twc_vpc" "example-vpc" {
   name        = "Example VPC"
   description = "Some example VPC"
-  subnet_v4   = "192.168.0.0/24"
-  location    = "ru-1"
+  subnet_v4   = "192.168.0.0/24" # subnet in CIDR notation
+  location    = "ru-1"           # ru-1 | ru-3 | de-1 | nl-1
 }
 
 
-### Example servers with VPC network
+### Example: servers in a private network
 
 data "twc_presets" "example-preset" {
   price_filter {
@@ -35,7 +35,7 @@ data "twc_os" "example-os" {
   version = "22.04"
 }
 
-# With VPC network
+# Server connected to a VPC (address assigned automatically)
 resource "twc_server" "example-server-with-local-network" {
   name  = "Example server with local network"
   os_id = data.twc_os.example-os.id
@@ -47,7 +47,7 @@ resource "twc_server" "example-server-with-local-network" {
   }
 }
 
-# With VPC network and specified ID IP
+# Server connected to a VPC with a manually specified IP
 resource "twc_server" "example-server-with-local-network-and-address" {
   name  = "Example server with local network and address"
   os_id = data.twc_os.example-os.id
@@ -60,7 +60,7 @@ resource "twc_server" "example-server-with-local-network-and-address" {
   }
 }
 
-### Example database with VPC network
+### Example: database in a private network
 data "twc_database_preset" "example-db-preset-redis-7" {
   location = "ru-1"
 
@@ -86,7 +86,7 @@ resource "twc_database_cluster" "example-redis-7" {
   }
 }
 
-### Example load balancer with VPC network
+### Example: load balancer in a private network
 
 data "twc_lb_preset" "example-lb-preset" {
   requests_per_second = "10K"
@@ -102,29 +102,7 @@ resource "twc_lb" "example-lb" {
 
   algo = "roundrobin"
 
-  is_sticky    = false
-  is_use_proxy = false
-  is_ssl       = false
-  is_keepalive = false
-
-  health_check {
-    proto = "http"
-
-    port = 80
-
-    path = "/lala"
-
-    inter   = 10
-    timeout = 5
-    fall    = 3
-    rise    = 2
-  }
-
-  ips = []
-
   preset_id = data.twc_lb_preset.example-lb-preset.id
-
-  project_id = resource.twc_project.example-project.id
 
   local_network {
     id = twc_vpc.example-vpc.id

@@ -193,4 +193,5 @@ provider "twc" {
 
 ### Optional
 
+- `base_url` (String) Base URL of the Timeweb Cloud API. Defaults to https://api.timeweb.cloud when not set
 - `token` (String, Sensitive) Secret API token from https://timeweb.cloud/my/api-keys

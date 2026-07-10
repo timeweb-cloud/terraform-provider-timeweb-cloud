@@ -13,19 +13,19 @@ Resource for describing needed disk backup and provides actual information about
 
 ```terraform
 data "twc_os" "example-os" {
-  name = "ubuntu"
+  name    = "ubuntu"
   version = "22.04"
 }
 
 data "twc_presets" "example-preset" {
   price_filter {
     from = 300
-    to = 400
+    to   = 400
   }
 }
 
 resource "twc_server" "example-server" {
-  name = "Example server with preset"
+  name  = "Example server with preset"
   os_id = data.twc_os.example-os.id
 
   preset_id = data.twc_presets.example-preset.id
@@ -39,7 +39,7 @@ resource "twc_server_disk" "example-additional-disk" {
 
 ### Backup from main server disk
 resource "twc_server_disk_backup" "example" {
-  source_server_id = twc_server.example-server.id
+  source_server_id      = twc_server.example-server.id
   source_server_disk_id = twc_server.example-server.disks[0].id
 
   comment = "example with main disk"
@@ -47,7 +47,7 @@ resource "twc_server_disk_backup" "example" {
 
 ### Backup from additional disk resource
 resource "twc_server_disk_backup" "example-with-additional-disk" {
-  source_server_id = twc_server_disk.example-disk.source_server_id
+  source_server_id      = twc_server_disk.example-additional-disk.source_server_id
   source_server_disk_id = twc_server_disk.example-additional-disk.id
 
   comment = "example with additional disk"
@@ -67,9 +67,9 @@ resource "twc_server_disk_backup" "example-with-additional-disk" {
 
 ### Read-Only
 
-- `created_at` (String) Date when backup was created
 - `id` (String) The ID of this resource.
 - `name` (String) Name of backup
+- `progress` (Number) Backup creation progress (0-100)
 - `size` (Number) Backups size
 - `status` (String) Current status of backup
 - `type` (String) Backup type (always `manual` for now)

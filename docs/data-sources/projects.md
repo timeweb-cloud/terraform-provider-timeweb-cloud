@@ -13,14 +13,14 @@ Data source that provides capability for filtering and project selection. All pa
 
 ```terraform
 data "twc_os" "example-os" {
-  name = "ubuntu"
+  name    = "ubuntu"
   version = "22.04"
 }
 
 data "twc_presets" "example-preset" {
   price_filter {
     from = 300
-    to = 400
+    to   = 400
   }
 }
 
@@ -31,7 +31,7 @@ data "twc_projects" "example-project" {
 
 # Usage example of selected project
 resource "twc_server" "example-server" {
-  name = "Example server"
+  name  = "Example server"
   os_id = data.twc_os.example-os.id
 
   preset_id = data.twc_presets.example-preset.id

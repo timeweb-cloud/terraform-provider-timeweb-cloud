@@ -23,14 +23,14 @@ data "twc_image" "example-image" {
 
 # Usage example of selected OS
 resource "twc_server" "example-server" {
-  name = "Example server"
+  name     = "Example server"
   image_id = data.twc_image.example-image.id
 
   configuration {
     configurator_id = data.twc_configurator.example-configurator.id
-    disk = 1024 * 10
-    cpu = 1
-    ram = 1024
+    disk            = 1024 * 10
+    cpu             = 1
+    ram             = 1024
   }
 }
 ```

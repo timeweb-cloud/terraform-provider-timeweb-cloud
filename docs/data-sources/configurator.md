@@ -13,7 +13,7 @@ Configurator data source that provides information about available hardware para
 
 ```terraform
 data "twc_os" "example-os" {
-  name = "ubuntu"
+  name    = "ubuntu"
   version = "22.04"
 }
 
@@ -24,14 +24,14 @@ data "twc_configurator" "example-configurator" {
 
 # Usage example of selected configuration
 resource "twc_server" "example-server" {
-  name = "Example server"
+  name  = "Example server"
   os_id = data.twc_os.example-os.id
 
   configuration {
     configurator_id = data.twc_configurator.example-configurator.id
-    disk = 1024 * 10
-    cpu = 1
-    ram = 1024
+    disk            = 1024 * 10
+    cpu             = 1
+    ram             = 1024
   }
 }
 ```

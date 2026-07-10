@@ -16,41 +16,38 @@ this may lead to errors and requires manually removing from state
 ## Примеры использования
 
 ```terraform
+# S3 is available only in the ru-1 location
 data "twc_s3_preset" "example-s3-preset" {
   location = "ru-1"
 
   disk = 10 * 1024
-
-  price_filter {
-    from = 50
-    to = 100
-  }
 }
 
 resource "twc_s3_bucket" "example-s3-bucket" {
-  name = "example-s3-bucket"
-  type = "private"
+  name      = "example-s3-bucket"
+  type      = "private"
   preset_id = data.twc_s3_preset.example-s3-preset.id
 }
 
-# Create some_image.png in previously created bucket
+# Upload some_image.png to the previously created bucket
 resource "twc_s3_bucket_file" "example-s3-bucket-file" {
   bucket_id = twc_s3_bucket.example-s3-bucket.id
 
   path = "some_image.png"
 
+  # file — base64-encoded file contents
   file = filebase64("./some_image.png")
 }
 
 
-# Create some_directory for next example
+# Create some_directory for the next example
 resource "twc_s3_bucket_directory" "example-s3-bucket-directory" {
   bucket_id = twc_s3_bucket.example-s3-bucket.id
 
   name = "some_directory"
 }
 
-# Create some_image.png in previously created directory
+# Upload some_image.png to the previously created directory
 resource "twc_s3_bucket_file" "example-s3-bucket-file-in-directory" {
   bucket_id = twc_s3_bucket.example-s3-bucket.id
 
@@ -58,7 +55,7 @@ resource "twc_s3_bucket_file" "example-s3-bucket-file-in-directory" {
 
   file = filebase64("./some_image.png")
 
-  ## Explicit dependencies helps terraform to build correct plan
+  ## An explicit dependency helps terraform build a correct plan
   depends_on = [twc_s3_bucket_directory.example-s3-bucket-directory]
 }
 ```

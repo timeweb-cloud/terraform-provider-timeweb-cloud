@@ -13,14 +13,14 @@ Data source that provides capability for filtering and SSH key selection. All pa
 
 ```terraform
 data "twc_os" "example-os" {
-  name = "ubuntu"
+  name    = "ubuntu"
   version = "22.04"
 }
 
 data "twc_presets" "example-preset" {
   price_filter {
     from = 300
-    to = 400
+    to   = 400
   }
 }
 
@@ -31,7 +31,7 @@ data "twc_ssh_keys" "example-key" {
 
 # Usage example of selected SSH key
 resource "twc_server" "example-server" {
-  name = "Example server"
+  name  = "Example server"
   os_id = data.twc_os.example-os.id
 
   preset_id = data.twc_presets.example-preset.id
@@ -50,6 +50,5 @@ resource "twc_server" "example-server" {
 ### Read-Only
 
 - `body` (String) Public part of specified SSH Key
-- `created_at` (String) Time of creation specified SSH Key in ISO8601 format
 - `id` (String) The ID of this resource.
 

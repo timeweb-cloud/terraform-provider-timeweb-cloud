@@ -12,13 +12,11 @@ Resource for describing needed database user and provides actual information abo
 ## Примеры использования
 
 ```terraform
-# Select any preset from location = "ru-1", 8 Gb disk space with price between 100 and 500 RUB for MySQL
+# Select a preset for the MySQL cluster
 data "twc_database_preset" "example-db-preset" {
   location = "ru-1"
-
-  type = "mysql"
-
-  disk = 8 * 1024
+  type     = "mysql"
+  disk     = 8 * 1024
 
   price_filter {
     from = 100
@@ -29,43 +27,36 @@ data "twc_database_preset" "example-db-preset" {
 # Create example cluster of MySQL
 resource "twc_database_cluster" "example-mysql-8" {
   name = "example_mysql_8"
-
   type = "mysql"
 
   preset_id = data.twc_database_preset.example-db-preset.id
 }
 
-# Create example instance in previously created cluster
+# Create example instances (databases) in the cluster
 resource "twc_database_instance" "example-mysql-8-instance" {
   cluster_id = twc_database_cluster.example-mysql-8.id
-
-  name = "example"
+  name       = "example"
 }
 
-# Create other example instance in previously created cluster
 resource "twc_database_instance" "example-mysql-8-other-instance" {
   cluster_id = twc_database_cluster.example-mysql-8.id
-
-  name = "otherexample"
+  name       = "otherexample"
 }
 
-# Create some other example instance in previously created cluster
-resource "twc_database_instance" "example-mysql-8-some-other-instance" {
+# User with privileges across ALL cluster databases.
+# Exactly one of the blocks is set: privileges (for all databases) OR instance (per-database).
+resource "twc_database_user" "example-mysql-8-admin" {
   cluster_id = twc_database_cluster.example-mysql-8.id
 
-  name = "someotherexample"
-}
+  login    = "admin"
+  password = "examplepassword1"
 
-# Create user with access across all cluster instances
-resource "twc_database_user" "example-mysql-8-user" {
-  cluster_id = twc_database_cluster.example-mysql-8.id
-
-  login      = "admin"
-  password   = "examplepassword1"
+  # for_all — grant the user privileges on all cluster databases
+  for_all    = true
   privileges = ["SELECT", "INSERT", "UPDATE", "DELETE", "ALTER", "REFERENCES", "CREATE", "DROP", "INDEX"]
 }
 
-# Create user with privileges to one cluster instance
+# User with privileges scoped to a single database (instance)
 resource "twc_database_user" "example-mysql-8-user" {
   cluster_id = twc_database_cluster.example-mysql-8.id
 
@@ -78,8 +69,8 @@ resource "twc_database_user" "example-mysql-8-user" {
   }
 }
 
-# Create other user with privileges to multiple cluster instances
-resource "twc_database_user" "example-mysql-8-user" {
+# User with privileges scoped to multiple databases (instances)
+resource "twc_database_user" "example-mysql-8-multi-user" {
   cluster_id = twc_database_cluster.example-mysql-8.id
 
   login    = "someotheruser"
@@ -108,6 +99,7 @@ resource "twc_database_user" "example-mysql-8-user" {
 ### Optional
 
 - `description` (String) Description for user
+- `for_all` (Boolean) Flag that grants the user privileges for all databases in the cluster
 - `host` (String) Allowed host for login as this user
 - `instance` (Block List) Privileges of user by instance (see [below for nested schema](#nestedblock--instance))
 - `privileges` (List of String) Privileges of user

@@ -15,7 +15,7 @@ Data source that provides bunch of useful parameters for filtering and suitable 
 data "twc_presets" "example-preset" {
   price_filter {
     from = 300
-    to = 400
+    to   = 400
   }
 }
 
@@ -24,15 +24,15 @@ data "twc_software" "example-software" {
   name = "Docker"
 
   os {
-    name = "ubuntu"
+    name    = "ubuntu"
     version = "22.04"
   }
 }
 
 # Usage example of selected software
 resource "twc_server" "example-server" {
-  name = "Example server"
-  os_id = data.twc_software.example-software.os[0].id
+  name        = "Example server"
+  os_id       = data.twc_software.example-software.os[0].id
   software_id = data.twc_software.example-software.id
 
   preset_id = data.twc_presets.example-preset.id

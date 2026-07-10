@@ -12,14 +12,25 @@ Data source that provides bunch of useful parameters for filtering and suitable 
 ## Примеры использования
 
 ```terraform
-// Select balancer preset that may process 10K RPS with price between 100 and 200 RUB
+# Select a load balancer preset for ~10K RPS priced between 100 and 200 rub.
+# All parameters are filters, specify only the ones you need.
 data "twc_lb_preset" "example-lb-preset" {
+  location            = "ru-1"
   requests_per_second = "10K"
 
   price_filter {
     from = 100
-    to = 200
+    to   = 200
   }
+}
+
+# Using the selected preset when creating a load balancer
+resource "twc_lb" "example-lb" {
+  name = "example-lb"
+
+  algo = "roundrobin"
+
+  preset_id = data.twc_lb_preset.example-lb-preset.id
 }
 ```
 

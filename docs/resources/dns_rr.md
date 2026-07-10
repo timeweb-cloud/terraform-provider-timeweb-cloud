@@ -12,35 +12,36 @@ Resource for describing needed DNS RR (resource records) and provides actual inf
 ## Примеры использования
 
 ```terraform
-# Select zone with name "example.com"
+# Select the zone named "example.com"
 data "twc_dns_zone" "example-zone" {
   name = "example.com"
 }
 
-# Add `AAAA` type resource record for zone root with value `::1`
-resource "twc_dns_rr" "example-resource-record" {
+# AAAA record for the zone root (@) with the value ::1
+resource "twc_dns_rr" "root-aaaa" {
   zone_id = data.twc_dns_zone.example-zone.id
 
-  name = "@"
-  type = "AAAA"
+  name  = "@" # "@" — the zone root; otherwise a host label relative to the zone
+  type  = "AAAA"
   value = "::1"
 }
 
-# Add `CNAME` type resource record for `www.example.com` subdomain that points to `example.com`
-resource "twc_dns_rr" "example-resource-record" {
+# CNAME record for www.example.com pointing to example.com
+resource "twc_dns_rr" "www-cname" {
   zone_id = data.twc_dns_zone.example-zone.id
 
-  name = "www"
-  type = "CNAME"
-  value = "example.com"
+  name  = "www"
+  type  = "CNAME"
+  value = "example.com" # domain names — without a trailing dot
 }
 
-# Add `MX` type resource record for `example.com` subdomain that points to `mx.example.com` with 10 priority
-resource "twc_dns_rr" "example-resource-record" {
+# MX record for the zone root: priority 10, host mx.example.com
+resource "twc_dns_rr" "root-mx" {
   zone_id = data.twc_dns_zone.example-zone.id
 
   name = "@"
   type = "MX"
+  # For MX the value is set as "<priority> <host>"
   value = "10 mx.example.com"
 }
 ```
@@ -58,3 +59,14 @@ resource "twc_dns_rr" "example-resource-record" {
 
 - `id` (String) The ID of this resource.
 
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# DNS resource record can be imported by specifying the numeric record identifier.
+# NOTE: the importer only sets the numeric record ID, but Read additionally needs
+# zone_id, name and type from state. After import you must also fill these attributes
+# in your configuration (and re-run apply) so the record can be refreshed correctly.
+terraform import twc_dns_rr.root-aaaa 42
+```

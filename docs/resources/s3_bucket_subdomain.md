@@ -12,30 +12,27 @@ Resource for add needed subdomain to S3 bucket
 ## Примеры использования
 
 ```terraform
+# S3 is available only in the ru-1 location
 data "twc_s3_preset" "example-s3-preset" {
   location = "ru-1"
 
   disk = 10 * 1024
-
-  price_filter {
-    from = 50
-    to = 100
-  }
 }
 
 resource "twc_s3_bucket" "example-s3-bucket" {
-  name = "example-s3-bucket"
-  type = "private"
+  name      = "example-s3-bucket"
+  type      = "private"
   preset_id = data.twc_s3_preset.example-s3-preset.id
 }
 
-# Example subdomain for S3 bucket
+# Subdomain for serving files from the S3 bucket
 resource "twc_s3_bucket_subdomain" "example-s3-bucket-subdomain" {
   bucket_id = twc_s3_bucket.example-s3-bucket.id
 
-  ## This example requires valid domain name with CNAME record to s3.timeweb.com
+  ## Requires a valid domain name with a CNAME record pointing to s3.timeweb.com
   subdomain = "s3.example.com"
 
+  # Issue an SSL certificate for the subdomain
   release_cert = true
 }
 ```

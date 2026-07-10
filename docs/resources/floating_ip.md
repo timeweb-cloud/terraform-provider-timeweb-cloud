@@ -12,22 +12,25 @@ Resource for describing needed floating IP and provides actual information about
 ## Примеры использования
 
 ```terraform
-# Creata example floating IP
+### Example floating IP
+
 resource "twc_floating_ip" "example-floating-ip" {
-  availability_zone = "spb-3"
+  availability_zone = "spb-3" # placement zone, required field
 
   comment = "Some floating IP"
 }
 
-# Creata example floating IP with DDoS Guard
-resource "twc_floating_ip" "example-floating-ip" {
+### Example floating IP with DDoS Guard
+
+resource "twc_floating_ip" "example-floating-ip-ddos" {
   availability_zone = "spb-3"
-  ddos_guard        = true
+  ddos_guard        = true # enable DDoS protection
 
   comment = "Some floating IP with DDoS Guard"
+  ptr     = "example.com" # PTR record in the DNS zone for this IP
 }
 
-# Create example floating IP with bounded resource
+### Example floating IP bound to a server
 
 data "twc_configurator" "example-configurator" {
   location = "ru-1"
@@ -51,11 +54,12 @@ resource "twc_server" "example-server" {
   }
 }
 
-resource "twc_floating_ip" "example-floating-ip" {
+resource "twc_floating_ip" "example-floating-ip-bound" {
   availability_zone = "spb-3"
 
   comment = "Some floating IP"
 
+  # Bind the IP to a resource (`server`, `balancer`, `dbaas`)
   resource {
     type = "server"
     id   = twc_server.example-server.id
@@ -95,5 +99,5 @@ Import is supported using the following syntax:
 
 ```shell
 # Floating IP can be imported by specifying the identifier (from URL)
-terraform import twc_server.example 968769c4-06ac-4b37-8e21-1fc8ff6c5a9b
+terraform import twc_floating_ip.example 968769c4-06ac-4b37-8e21-1fc8ff6c5a9b
 ```

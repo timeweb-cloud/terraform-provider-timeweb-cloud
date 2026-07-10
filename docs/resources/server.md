@@ -19,20 +19,41 @@ data "twc_configurator" "example-configurator" {
 }
 
 data "twc_os" "example-os" {
-  name = "ubuntu"
+  name    = "ubuntu"
   version = "22.04"
 }
 
 resource "twc_server" "example-server" {
-  name = "Example server"
+  name  = "Example server"
   os_id = data.twc_os.example-os.id
 
   configuration {
     configurator_id = data.twc_configurator.example-configurator.id
-    disk = 1024 * 10
-    cpu = 1
-    ram = 1024
+    disk            = 1024 * 10
+    cpu             = 1
+    ram             = 1024
   }
+}
+
+### Example server with all common options
+
+resource "twc_server" "example-server-full" {
+  name     = "Example server full"
+  comment  = "Managed by Terraform" # server comment
+  hostname = "example-host"         # only Latin letters, digits and hyphen
+  os_id    = data.twc_os.example-os.id
+
+  configuration {
+    configurator_id = data.twc_configurator.example-configurator.id
+    disk            = 1024 * 10
+    cpu             = 1
+    ram             = 1024
+  }
+
+  bandwidth                 = 200     # public network bandwidth, Mbit/s
+  is_ddos_guard             = true    # enable DDoS protection (only on creation)
+  availability_zone         = "spb-1" # availability zone (only on creation)
+  is_root_password_required = true    # issue a root password (can be disabled if ssh_keys_ids are set)
 }
 
 ### Example server with project
@@ -41,15 +62,15 @@ data "twc_projects" "example-project" {
   name = "Example"
 }
 
-resource "twc_server" "example-server" {
-  name = "Example server with project"
+resource "twc_server" "example-server-with-project" {
+  name  = "Example server with project"
   os_id = data.twc_os.example-os.id
 
   configuration {
     configurator_id = data.twc_configurator.example-configurator.id
-    disk = 1024 * 10
-    cpu = 1
-    ram = 1024
+    disk            = 1024 * 10
+    cpu             = 1
+    ram             = 1024
   }
 
   project_id = data.twc_projects.example-project.id
@@ -58,14 +79,14 @@ resource "twc_server" "example-server" {
 ### Example server by cloning
 
 resource "twc_server" "cloned-server-example" {
-  name = "Example of cloned server"
+  name             = "Example of cloned server"
   source_server_id = twc_server.example-server.id
 
   configuration {
     configurator_id = data.twc_configurator.example-configurator.id
-    disk = 1024 * 5 * 4
-    cpu = 1
-    ram = 1024
+    disk            = 1024 * 5 * 4
+    cpu             = 1
+    ram             = 1024
   }
 }
 
@@ -74,13 +95,22 @@ resource "twc_server" "cloned-server-example" {
 data "twc_presets" "example-preset" {
   price_filter {
     from = 300
-    to = 400
+    to   = 400
   }
 }
 
 resource "twc_server" "example-server-with-preset" {
-  name = "Example server with preset"
+  name  = "Example server with preset"
   os_id = data.twc_os.example-os.id
+
+  preset_id = data.twc_presets.example-preset.id
+}
+
+### Example server from image
+
+resource "twc_server" "example-server-from-image" {
+  name     = "Example server from image"
+  image_id = "6a2c9f7e-0000-0000-0000-000000000000" # image ID (mutually exclusive with os_id/software_id/source_server_id)
 
   preset_id = data.twc_presets.example-preset.id
 }
@@ -91,51 +121,69 @@ data "twc_software" "example-software" {
   name = "Docker"
 
   os {
-    family = "linux"
-    name = "ubuntu"
+    family  = "linux"
+    name    = "ubuntu"
     version = "22.04"
   }
 }
 
 resource "twc_server" "server-with-software" {
-  name = "Example server with software"
+  name      = "Example server with software"
   preset_id = data.twc_presets.example-preset.id
 
-  os_id = data.twc_software.example-software.os[0].id
+  os_id       = data.twc_software.example-software.os[0].id
   software_id = data.twc_software.example-software.id
+}
+
+### Example server with cloud-init and SSH keys
+
+resource "twc_ssh_key" "example-key" {
+  name = "Example"
+  body = file("~/.ssh/some-key.pub")
+}
+
+resource "twc_server" "example-server-cloud-init" {
+  name  = "Example server with cloud-init"
+  os_id = data.twc_os.example-os.id
+
+  preset_id = data.twc_presets.example-preset.id
+
+  ssh_keys_ids              = [twc_ssh_key.example-key.id]
+  is_root_password_required = false # since SSH keys are set, the root password can be omitted
+
+  # cloud-init script; if external network is needed use floating_ip_id
+  cloud_init = <<-EOT
+    #cloud-config
+    packages:
+      - nginx
+  EOT
 }
 
 ### Example servers with VPC network
 
-data "twc_presets" "example-preset" {
-  price_filter {
-    from = 300
-    to = 400
-  }
-}
-
 resource "twc_vpc" "example-vpc" {
-  name = "Example VPC"
+  name        = "Example VPC"
   description = "Some example VPC"
-  subnet_v4 = "192.168.0.0/24"
-  location = "ru-1"
+  subnet_v4   = "192.168.0.0/24"
+  location    = "ru-1"
 }
 
 # With VPC network
 resource "twc_server" "example-server-with-local-network" {
-  name = "Example server with local network"
+  name  = "Example server with local network"
   os_id = data.twc_os.example-os.id
 
   preset_id = data.twc_presets.example-preset.id
 
   local_network {
-    id = twc_vpc.example-vpc.id
+    id   = twc_vpc.example-vpc.id
+    mode = "dnat_and_snat" # NAT mode: dnat_and_snat / snat / no_nat
   }
 }
 
-# With VPC network and specified ID IP
+# With VPC network and specified IP address
 resource "twc_server" "example-server-with-local-network-and-address" {
-  name = "Example server with local network and address"
+  name  = "Example server with local network and address"
   os_id = data.twc_os.example-os.id
 
   preset_id = data.twc_presets.example-preset.id
@@ -156,13 +204,14 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 ### Optional
 
 - `availability_zone` (String) Availability zone for server (`spb-1`, `spb-3`, 'spb-4', `msk-1`, `nsk-1`, 'ams-1', 'fra-1', 'ala-1')
-- `bandwidth` (Number) Bandwidth for server
+- `bandwidth` (Number) Bandwidth for server (Mbps). Read back from the public network
 - `cloud_init` (String) Cloud-init script. If script requires external network you should use floating_ip_id field instead of twc_floating_ip.resource
 - `comment` (String) Comment for server
 - `configuration` (Block List, Max: 1) Configuration for server (see [below for nested schema](#nestedblock--configuration))
 - `floating_ip_id` (String) Floating IP ID for server
 - `hostname` (String) Hostname of the server
 - `image_id` (String) Image ID for servers (not supported for cloned servers)
+- `is_ddos_guard` (Boolean) Flag that enables DDoS guard service for the server. Create-only (the API does not support toggling it via update)
 - `is_root_password_required` (Boolean) Is root password required for server
 - `local_network` (Block List, Max: 1) Flag that enables local network for created server (not supported for cloned servers) (see [below for nested schema](#nestedblock--local_network))
 - `os_id` (Number) OS ID for server (not supported for cloned servers)
@@ -181,7 +230,6 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 - `cpu_frequency` (String) Current CPU frequency of server
 - `disks` (List of Object) Current server disks representation (see [below for nested schema](#nestedatt--disks))
 - `id` (String) The ID of this resource.
-- `is_ddos_guard` (Boolean) Flag that shows status of DDoS guard service
 - `location` (String) Location for the server (`ru-1`, `ru-2`, 'ru-3', `de-1`, `kz-1`, 'nl-1')
 - `main_ipv4` (String) Main IPv4 address from public interface
 - `networks` (List of Object) (see [below for nested schema](#nestedatt--networks))
@@ -189,7 +237,6 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 - `ram` (Number) Current RAM size of server
 - `root_pass` (String, Sensitive) Root password for server
 - `software` (List of Object) Information about specified software (if software_id was set) (see [below for nested schema](#nestedatt--software))
-- `start_at` (String) Last boot time (in ISO8601 format)
 - `status` (String) Current status of server (`installing`, `software_install`, `reinstalling`, `on`, `off`, `turning_on`, `turning_off`, `hard_turning_off`, `rebooting`, `hard_rebooting`, `removing`, `removed`, `cloning`, `transfer`, `blocked`, `configuring`, `no_paid`, `permanent_blocked`)
 - `vnc_pass` (String, Sensitive) VNC password for server
 

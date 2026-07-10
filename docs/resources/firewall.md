@@ -12,53 +12,55 @@ Resource for describing needed firewall and provides actual information about it
 ## Примеры использования
 
 ```terraform
-// Create example firewall that linked to two different servers
+# Create a firewall group and attach it to several resources via link.
+# policy (DROP/ACCEPT) is read-only, set on the API side, and not specified here.
 resource "twc_firewall" "example-firewall" {
-  name = "example-firewall"
+  name        = "example-firewall"
   description = "Some example firewall"
 
+  # link associates the firewall with resources. Allowed type values: server, dbaas, balancer, app.
   link {
-    id = resource.twc_server.vds-with-preset.id
+    id   = twc_server.vds-with-preset.id
     type = "server"
   }
 
   link {
-    id = resource.twc_server.vds-with-preset-2.id
+    id   = twc_server.vds-with-preset-2.id
     type = "server"
   }
 }
 
 data "twc_os" "os" {
-  family = "linux"
-  name = "ubuntu"
+  family  = "linux"
+  name    = "ubuntu"
   version = "22.04"
 }
 
 data "twc_presets" "preset" {
-  location = "ru-1"
-  disk_type = "nvme"
-  cpu_frequency = "3.3"
-  cpu = 1
-  ram = 2048
-  disk = 30720
-  bandwidth = 200
+  location          = "ru-1"
+  disk_type         = "nvme"
+  cpu_frequency     = "3.3"
+  cpu               = 1
+  ram               = 2048
+  disk              = 30720
+  bandwidth         = 200
   description_short = "Cloud 30"
 
   price_filter {
     from = 300
-    to = 400
+    to   = 400
   }
 }
 
 resource "twc_server" "vds-with-preset" {
-  name = "Some server with preset"
+  name  = "Some server with preset"
   os_id = data.twc_os.os.id
 
   preset_id = data.twc_presets.preset.id
 }
 
 resource "twc_server" "vds-with-preset-2" {
-  name = "Some server with preset 2"
+  name  = "Some server with preset 2"
   os_id = data.twc_os.os.id
 
   preset_id = data.twc_presets.preset.id
@@ -79,6 +81,7 @@ resource "twc_server" "vds-with-preset-2" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
+- `policy` (String) Default policy of the firewall group (`DROP` or `ACCEPT`). Read-only: the API does not allow changing it via this endpoint
 
 <a id="nestedblock--link"></a>
 ### Nested Schema for `link`
@@ -86,5 +89,5 @@ resource "twc_server" "vds-with-preset-2" {
 Required:
 
 - `id` (String) Resource ID
-- `type` (String) Resource type [server, dbaas, balancer]
+- `type` (String) Resource type [server, dbaas, balancer, app]
 

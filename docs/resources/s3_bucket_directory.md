@@ -16,31 +16,27 @@ this may lead to errors and requires manually removing from state
 ## Примеры использования
 
 ```terraform
+# S3 is available only in the ru-1 location
 data "twc_s3_preset" "example-s3-preset" {
   location = "ru-1"
 
   disk = 10 * 1024
-
-  price_filter {
-    from = 50
-    to = 100
-  }
 }
 
 resource "twc_s3_bucket" "example-s3-bucket" {
-  name = "example-s3-bucket"
-  type = "private"
+  name      = "example-s3-bucket"
+  type      = "private"
   preset_id = data.twc_s3_preset.example-s3-preset.id
 }
 
-# Create some_directory in previously created bucket
+# Create some_directory in the previously created bucket
 resource "twc_s3_bucket_directory" "example-s3-bucket-directory" {
   bucket_id = twc_s3_bucket.example-s3-bucket.id
 
   name = "some_directory"
 }
 
-# This resource also allow to create nested directories
+# The resource also supports nested directories
 resource "twc_s3_bucket_directory" "example-s3-bucket-nested-directories" {
   bucket_id = twc_s3_bucket.example-s3-bucket.id
 
