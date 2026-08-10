@@ -71,14 +71,14 @@ resource "twc_floating_ip" "example-floating-ip-bound" {
 
 ### Required
 
-- `availability_zone` (String) Address of specified floating IP Address
+- `availability_zone` (String) Availability zone to place the floating IP in (`spb-1`, `spb-3`, `spb-4`, `msk-1`, `nsk-1`, `ams-1`, `fra-1`, `ala-1`). Must match the zone of the bound resource
 
 ### Optional
 
 - `comment` (String) Comment of specified floating IP Address
 - `ddos_guard` (Boolean) Enabled DDoS Guard for specified floating IP Address
 - `ptr` (String) PTR record in DNS zone of specified floating IP Address
-- `resource` (Block List, Max: 1) Address of specified floating IP Address (see [below for nested schema](#nestedblock--resource))
+- `resource` (Block List, Max: 1) Resource that the floating IP is bound to (a server, balancer or database cluster) (see [below for nested schema](#nestedblock--resource))
 
 ### Read-Only
 

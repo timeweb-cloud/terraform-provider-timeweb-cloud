@@ -35,7 +35,7 @@ data "twc_network_drive_preset" "example-by-price" {
 ### Optional
 
 - `price_filter` (Block List, Max: 1) Price filter for select preset in specified price range (see [below for nested schema](#nestedblock--price_filter))
-- `type` (String) Type of the network drive for preset
+- `type` (String) Type of the network drive for preset (`nvme`, `hdd`)
 
 ### Read-Only
 

@@ -50,7 +50,7 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 - `cpu_frequency` (String) CPU frequency for the created server (`3.3`)
 - `location` (String) Location for the created server. Code location map to availability zone: `ru-1` — SPB (spb-3), `ru-3` — MSK (msk-1), `nl-1` — AMS (ams-1). When server was created all new presets or configuration may be only chosen from same location
 - `node_type` (String) Node type (`master`, `worker`)
-- `preset_type` (String) Preset type for created node ()
+- `preset_type` (String) Preset type for created node (`premium`, `dedicated_cpu`, `gpu`)
 
 ### Read-Only
 

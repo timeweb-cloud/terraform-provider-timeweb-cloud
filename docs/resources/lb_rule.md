@@ -47,10 +47,10 @@ resource "twc_lb_rule" "example-lb-rule" {
 ### Required
 
 - `balancer_port` (Number) Balancer incoming traffic TCP port
-- `balancer_proto` (String) Balancer incoming traffic protocol
+- `balancer_proto` (String) Balancer incoming traffic protocol (`http`, `http2`, `https`, `tcp`)
 - `lb_id` (Number) ID of target balancer
 - `server_port` (Number) Server incoming traffic TCP port
-- `server_proto` (String) Server incoming traffic protocol
+- `server_proto` (String) Server incoming traffic protocol (`http`, `http2`, `https`, `tcp`)
 
 ### Read-Only
 

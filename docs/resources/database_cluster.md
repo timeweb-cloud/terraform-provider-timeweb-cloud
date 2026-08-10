@@ -111,7 +111,7 @@ resource "twc_database_cluster" "example-clickhouse" {
 
 - `name` (String) Name for database cluster
 - `preset_id` (Number) Preset ID for database cluster
-- `type` (String) Type of database cluster
+- `type` (String) Type of database cluster (database engine). Validated against the API. Common values: `mysql`, `mysql5`, `postgres`, `redis`, `redis7`, `valkey`, `mongodb`, `clickhouse`, `opensearch`, `kafka`, `rabbitmq`. The chosen `twc_database_preset` must be of the same type
 
 ### Optional
 
@@ -119,7 +119,7 @@ resource "twc_database_cluster" "example-clickhouse" {
 - `availability_zone` (String) Availability zone for database cluster
 - `config_parameters` (Map of String) Configuration parameters for database cluster
 - `description` (String) Description for project
-- `hash_type` (String) Hash type for database (mysql). Computed from API when not set explicitly
+- `hash_type` (String) Hash type for database (mysql): `caching_sha2` or `mysql_native`. Computed from API when not set explicitly
 - `is_enabled_public_ipv6` (Boolean) Flag that shows whether public IPv6 is enabled for the cluster
 - `is_external_ip` (Boolean) Flag that shows allowability database only by external IP address
 - `is_secure_connection_enabled` (Boolean) Flag that shows whether secure (SSL) connection is enabled for the cluster

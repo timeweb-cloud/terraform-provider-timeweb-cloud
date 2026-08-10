@@ -66,7 +66,7 @@ resource "twc_server_disk_backup_schedule" "additional-disk-example" {
 
 - `copy_count` (Number) Maximum stored copy count
 - `creation_start_at` (String) Creation date for first backup
-- `interval` (String) Interval between auto backups
+- `interval` (String) Interval between auto backups (`day`, `week`, `month`)
 - `source_server_disk_id` (Number) Disk ID for which backup should be configured
 - `source_server_id` (Number) Server ID for which disk auto backups should be configured
 

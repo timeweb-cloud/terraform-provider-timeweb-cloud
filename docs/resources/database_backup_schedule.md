@@ -53,7 +53,7 @@ resource "twc_database_backup_schedule" "example-schedule" {
 - `cluster_id` (Number) Database cluster ID for which database auto backups should be configured
 - `copy_count` (Number) Maximum stored copy count
 - `creation_start_at` (String) Creation date for first backup
-- `interval` (String) Interval between auto backups
+- `interval` (String) Interval between auto backups (`day`, `week`, `month`)
 
 ### Optional
 

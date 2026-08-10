@@ -102,7 +102,7 @@ resource "twc_database_user" "example-mysql-8-multi-user" {
 - `for_all` (Boolean) Flag that grants the user privileges for all databases in the cluster
 - `host` (String) Allowed host for login as this user
 - `instance` (Block List) Privileges of user by instance (see [below for nested schema](#nestedblock--instance))
-- `privileges` (List of String) Privileges of user
+- `privileges` (List of String) Privileges granted to the user (engine-specific). Common SQL values: `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `CREATE`, `DROP`, `ALTER`, `INDEX`, `REFERENCES`. PostgreSQL also: `CREATEDB`, `CREATEROLE`. Redis: `READ`, `WRITE`, `ADMIN`
 
 ### Read-Only
 
@@ -114,5 +114,5 @@ resource "twc_database_user" "example-mysql-8-multi-user" {
 Optional:
 
 - `instance_id` (Number) Database instance ID for which user has privileges
-- `privileges` (List of String) Privileges of user
+- `privileges` (List of String) Privileges granted to the user on this database (engine-specific). Common SQL values: `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `CREATE`, `DROP`, `ALTER`, `INDEX`, `REFERENCES`
 

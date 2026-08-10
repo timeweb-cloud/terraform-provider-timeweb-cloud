@@ -115,7 +115,7 @@ resource "twc_lb" "example-lb" {
 
 ### Required
 
-- `location` (String) Location for VPC
+- `location` (String) Location for VPC (`ru-1`, `ru-3`, `de-1`, `nl-1`)
 - `name` (String) Name for VPC
 - `subnet_v4` (String) Subnet for VPC in CIDR notation
 

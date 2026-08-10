@@ -56,9 +56,9 @@ resource "twc_firewall_rule" "allow-icmp-egress" {
 
 ### Required
 
-- `direction` (String) Rule direction
+- `direction` (String) Rule direction (`ingress`, `egress`)
 - `firewall_id` (String) ID of target firewall
-- `protocol` (String) Rule protocol
+- `protocol` (String) Rule protocol (`tcp`, `udp`, `icmp`, `tcp6`, `udp6`, `icmp6`)
 
 ### Optional
 

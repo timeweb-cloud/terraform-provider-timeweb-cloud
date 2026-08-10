@@ -86,7 +86,7 @@ Required:
 
 Required:
 
-- `type` (String) Maintenance slot type
+- `type` (String) Maintenance slot type (`any_time`, `fixed_time`)
 
 Optional:
 

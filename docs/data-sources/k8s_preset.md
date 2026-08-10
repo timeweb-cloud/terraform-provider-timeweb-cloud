@@ -42,7 +42,7 @@ data "twc_k8s_preset" "example-k8s-preset-worker" {
 - `network` (Number) Network bandwidth capacity of specified preset
 - `price_filter` (Block List, Max: 1) Price filter for select preset in specified price range (see [below for nested schema](#nestedblock--price_filter))
 - `ram` (Number) RAM size of specified preset
-- `type` (String) Node type for preset
+- `type` (String) Node type for preset (`master`, `worker`)
 
 ### Read-Only
 

@@ -51,7 +51,7 @@ resource "twc_dns_rr" "root-mx" {
 ### Required
 
 - `name` (String) Host label for the resource record relative to zone name (zone name will be appended to end via dot symbol). Special name '@' will be determined as zone root
-- `type` (String) Type for resource record
+- `type` (String) Type for resource record (`A`, `AAAA`, `CNAME`, `MX`, `TXT`)
 - `value` (String) Value for resource record. Domain names should be without trailing dot symbol
 - `zone_id` (String) Zone ID for which resource record should be created
 

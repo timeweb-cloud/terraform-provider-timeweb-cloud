@@ -78,7 +78,7 @@ resource "twc_lb_rule" "example-lb-rule" {
 
 ### Optional
 
-- `algo` (String) Algorithm for balancing
+- `algo` (String) Algorithm for balancing (`roundrobin`, `leastconn`)
 - `availability_zone` (String) Availability zone for load balancer
 - `client_timeout` (Number) Client timeout
 - `connect_timeout` (Number) Connection timeout
@@ -100,7 +100,7 @@ resource "twc_lb_rule" "example-lb-rule" {
 - `id` (String) The ID of this resource.
 - `ip` (String) IP-address balancer of network interface
 - `local_ip` (String) Local IP-address balancer of network interface
-- `status` (String) Current status of balancer (`started`, `starting`, `stoped`, `no_paid`)
+- `status` (String) Current status of balancer (`started`, `starting`, `stopped`, `no_paid`)
 
 <a id="nestedblock--health_check"></a>
 ### Nested Schema for `health_check`
@@ -111,7 +111,7 @@ Optional:
 - `inter` (Number) Interval in seconds for active backend health check
 - `path` (String) Path for active backend health check
 - `port` (Number) TCP port for active backend health check
-- `proto` (String) Protocol for active backend health check
+- `proto` (String) Protocol for active backend health check (`http`, `http2`, `https`, `tcp`)
 - `rise` (Number) Success requests count threshold for active backend health check
 - `timeout` (Number) Timeout for active backend health check
 
