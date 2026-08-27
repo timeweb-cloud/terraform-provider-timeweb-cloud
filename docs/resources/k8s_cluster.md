@@ -26,7 +26,6 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
   high_availability = false
   version           = "v1.31.0"
   network_driver    = "flannel"
-  ingress           = true
 
   preset_id = data.twc_k8s_preset.example-k8s-preset-master.id
 
