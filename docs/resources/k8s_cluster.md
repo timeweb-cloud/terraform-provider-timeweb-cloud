@@ -34,7 +34,7 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
   maintenance_slot {
     type = "fixed_time"
     from = "02:00"
-    to   = "04:00"
+    to   = "06:00"
   }
 }
 ```
@@ -85,7 +85,7 @@ Required:
 
 Required:
 
-- `type` (String) Maintenance slot type (`any_time`, `fixed_time`)
+- `type` (String) Maintenance slot type (`any_time`, `fixed_time`). For the `fixed_time` parameter, the interval must be at least 3 hours
 
 Optional:
 
