@@ -50,7 +50,7 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 ### Optional
 
 - `configuration` (Block List, Max: 1) Configuration for master nodes (see [below for nested schema](#nestedblock--configuration))
-- `description` (String) Description for K8S cluster
+- `description` (String) Description for K8S cluster. Only letters, numbers, and symbols: ", . ) ( - & # [ ] _" - are allowed
 - `high_availability` (Boolean) High Availability for K8S cluster
 - `ingress` (Boolean) Add ingress for K8S cluster
 - `maintenance_slot` (Block List) Maintenance window for cluster (see [below for nested schema](#nestedblock--maintenance_slot))
