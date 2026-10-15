@@ -23,19 +23,62 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
   name        = "example-cluster"
   description = "some example cluster"
 
-  high_availability = false
-  version           = "v1.31.0"
-  network_driver    = "flannel"
-  ingress           = true
+  version        = "v1.34.11+k0s.0"
+  network_driver = "calico"
+  ingress        = true
 
+  # The number of master nodes is defined by the master preset (see `master_nodes_count`
+  # of the twc_k8s_preset data source)
   preset_id = data.twc_k8s_preset.example-k8s-preset-master.id
 
   # Cluster maintenance window: any_time — at any time,
-  # fixed_time — only within the given interval (from/to in HH:MM format)
+  # fixed_time — only within the given interval (from/to in HH:MM format, at least 180 minutes)
   maintenance_slot {
     type = "fixed_time"
     from = "02:00"
-    to   = "04:00"
+    to   = "05:00"
+  }
+
+  # Project to place the cluster into
+  project_id = twc_project.example-project.id
+
+  # Time limits for operations (defaults: create/update — 60m, delete — 30m)
+  timeouts {
+    create = "90m"
+  }
+}
+
+resource "twc_project" "example-project" {
+  name = "Example project"
+}
+
+### High availability cluster with master nodes configured via configurator
+
+data "twc_k8s_configurator" "example-k8s-master-configurator" {
+  location  = "ru-3"
+  node_type = "master"
+}
+
+resource "twc_k8s_cluster" "example-k8s-ha-cluster" {
+  name           = "example-ha-cluster"
+  version        = "v1.34.11+k0s.0"
+  network_driver = "calico"
+
+  configuration {
+    configurator_id = data.twc_k8s_configurator.example-k8s-master-configurator.id
+    cpu             = 4
+    ram             = 8192
+    disk            = 61440
+  }
+
+  # 1 or 3 master nodes (3 — high availability). Can be increased in place (1 -> 3),
+  # decreasing forces cluster re-creation
+  master_nodes_count = 3
+
+  # Internal networks of the cluster (set only at creation)
+  cluster_network_cidr {
+    pods_network     = "10.210.0.0/16"
+    services_network = "10.110.0.0/16"
   }
 }
 ```
@@ -50,25 +93,38 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 
 ### Optional
 
+- `cluster_network_cidr` (Block List, Max: 1) Internal networks of the cluster. Defaults are `10.244.0.0/16` for pods and `10.96.0.0/12` for services. Must be private IPv4 ranges, must not overlap each other and the nodes network. Changing it forces cluster re-creation (see [below for nested schema](#nestedblock--cluster_network_cidr))
 - `configuration` (Block List, Max: 1) Configuration for master nodes (see [below for nested schema](#nestedblock--configuration))
 - `description` (String) Description for K8S cluster
-- `high_availability` (Boolean) High Availability for K8S cluster
+- `high_availability` (Boolean, Deprecated) High Availability for K8S cluster (deprecated, use `master_nodes_count`). Computed as `master_nodes_count > 1`
 - `ingress` (Boolean) Add ingress for K8S cluster
 - `maintenance_slot` (Block List) Maintenance window for cluster (see [below for nested schema](#nestedblock--maintenance_slot))
+- `master_nodes_count` (Number) Number of master nodes (`1` or `3`, `3` means high availability). Can be set only together with `configuration` block: with `preset_id` the number of masters is defined by the master preset (see `master_nodes_count` of `twc_k8s_preset`; currently all master presets have 1 master, so high availability requires `configuration`). Can be increased in place (1 -> 3), decreasing forces cluster re-creation
 - `network_id` (String) ID of VPC for K8S cluster
 - `oidc_provider` (Block List) OIDC provider settings for cluster (see [below for nested schema](#nestedblock--oidc_provider))
 - `preset_id` (Number) Preset ID for nodes in group
 - `project_id` (Number) Project ID for K8S cluster
+- `timeouts` (Block, Optional) (see [below for nested schema](#nestedblock--timeouts))
 - `virtual_router_id` (String) ID of virtual router for K8S cluster. Must be set together with `network_id`. If you want to unbound router from cluster, you should change node groups (delete virtual_router_id, set public_ip_enabled = true) for every group, wait until it done, after you should unbound cluster and after delete router
 
 ### Read-Only
 
+- `availability_zone` (String) Availability zone of the cluster. Determined by the location of the chosen master preset/configurator
 - `cpu` (Number) Sum of CPU count of all worker nodes
 - `disk` (Number) Sum of disks volume of worker nodes
 - `id` (String) The ID of this resource.
 - `kubeconfig` (String, Sensitive) K8S cluster kubeconfig
 - `ram` (Number) Sum of RAM count of all worker nodes
 - `status` (String) Current status of K8S cluster (`installing`, `provisioning`, `active`, `unpaid`, `started`, `not_installed`, `failed`, `unpaid_not_installed`, `deletion`)
+
+<a id="nestedblock--cluster_network_cidr"></a>
+### Nested Schema for `cluster_network_cidr`
+
+Optional:
+
+- `pods_network` (String) CIDR of the pods network (mask from /8 to /28)
+- `services_network` (String) CIDR of the services network (mask from /12 to /28)
+
 
 <a id="nestedblock--configuration"></a>
 ### Nested Schema for `configuration`
@@ -111,6 +167,16 @@ Optional:
 Read-Only:
 
 - `status` (String)
+
+
+<a id="nestedblock--timeouts"></a>
+### Nested Schema for `timeouts`
+
+Optional:
+
+- `create` (String)
+- `delete` (String)
+- `update` (String)
 
 ## Import
 

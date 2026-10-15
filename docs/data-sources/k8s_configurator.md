@@ -56,7 +56,20 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 
 - `disk_type` (String, Deprecated) Disk type for the created server (`ssd`, `nvme`, `hdd`)
 - `id` (String) The ID of this resource.
+- `prices` (List of Object) Monthly prices of configurator resources (see [below for nested schema](#nestedatt--prices))
 - `requirements` (Block List) Configuration limitations for specified configurator (see [below for nested schema](#nestedblock--requirements))
+
+<a id="nestedatt--prices"></a>
+### Nested Schema for `prices`
+
+Read-Only:
+
+- `bandwidth` (Number)
+- `cpu` (Number)
+- `disk` (Number)
+- `gpu` (Number)
+- `ram` (Number)
+
 
 <a id="nestedblock--requirements"></a>
 ### Nested Schema for `requirements`

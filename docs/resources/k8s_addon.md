@@ -2,12 +2,12 @@
 page_title: "twc_k8s_addon Resource - Timeweb Cloud"
 subcategory: ""
 description: |-
-  Resource for describing K8S cluster addon
+  Resource for describing K8S cluster addon. Import ID: CLUSTERID/ADDONID.
 ---
 
 # twc_k8s_addon (Resource)
 
-Resource for describing K8S cluster addon
+Resource for describing K8S cluster addon. Import ID: CLUSTER_ID/ADDON_ID.
 
 ## Примеры использования
 
@@ -22,9 +22,8 @@ data "twc_k8s_preset" "example-k8s-preset-master" {
 resource "twc_k8s_cluster" "example-k8s-cluster" {
   name = "example-cluster"
 
-  high_availability = false
-  version           = "v1.31.0"
-  network_driver    = "flannel"
+  version        = "v1.34.11+k0s.0"
+  network_driver = "calico"
 
   preset_id = data.twc_k8s_preset.example-k8s-preset-master.id
 }
@@ -34,10 +33,17 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
 resource "twc_k8s_addon" "example-capsule-addon" {
   cluster_id = twc_k8s_cluster.example-k8s-cluster.id
   type       = "capsule"
-  version    = "v0.7.2"
+  # Required for every addon type (semver). Available versions:
+  # GET https://api.timeweb.cloud/api/v1/k8s/clusters/{cluster_id}/addons-configs
+  version = "v0.7.2"
 
   # Addon configuration type: basic — standard, custom — custom (yaml_config / config)
   config_type = "basic"
+
+  # Time limit for installation and update (default 30m)
+  timeouts {
+    create = "45m"
+  }
 }
 
 ### CSI-S3 addon with S3 credentials
@@ -45,6 +51,7 @@ resource "twc_k8s_addon" "example-capsule-addon" {
 resource "twc_k8s_addon" "example-csi-s3-addon" {
   cluster_id  = twc_k8s_cluster.example-k8s-cluster.id
   type        = "csi_s3"
+  version     = "0.42.1" # take the actual version from addons-configs of the cluster
   config_type = "basic"
 
   # The config block is set only for the csi_s3 addon — S3 storage access credentials
@@ -65,11 +72,12 @@ resource "twc_k8s_addon" "example-csi-s3-addon" {
 - `cluster_id` (Number) K8S cluster ID for which addon should be created
 - `config_type` (String) Config type (`basic`, `custom`)
 - `type` (String) Type of addon (`ingress`, `kubernetes_dashboard`, `csi_s3`, `flannel`, `cilium`, `kube-prometheus-stack`, `kiali`, `capsule`, `jaeger`, `cert-manager`, `istio-ingress`, `istiod`, `istio-base`, `traefik`, `fluent-operator`, `velero`, `external-dns`, `nvidia`)
+- `version` (String) Version of the addon (semver, e.g. `v1.16.2`). Available version for each addon type may be retrieved from API: `GET /api/v1/k8s/clusters/{cluster_id}/addons-configs`
 
 ### Optional
 
 - `config` (Block List, Max: 1) (see [below for nested schema](#nestedblock--config))
-- `version` (String) Version of the config
+- `timeouts` (Block, Optional) (see [below for nested schema](#nestedblock--timeouts))
 - `yaml_config` (String) YAML configuration for addon
 
 ### Read-Only
@@ -88,3 +96,21 @@ Required:
 - `region` (String) Region of the config
 - `secret_key` (String) Secret key of the config
 
+
+<a id="nestedblock--timeouts"></a>
+### Nested Schema for `timeouts`
+
+Optional:
+
+- `create` (String)
+- `delete` (String)
+- `update` (String)
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Import addon by cluster ID and addon ID
+terraform import twc_k8s_addon.example-capsule-addon 1234/56
+```

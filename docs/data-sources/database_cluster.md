@@ -27,8 +27,18 @@ data "twc_database_cluster" "by-name" {
 
 # Select any cluster in a location that is exposed on an external IP
 data "twc_database_cluster" "external" {
-  location       = "ru-1"
+  location       = "ru-3"
   is_external_ip = true
+}
+
+# Cluster settings
+output "cluster_settings" {
+  value = {
+    nodes            = data.twc_database_cluster.by-name.replications
+    maintenance_slot = data.twc_database_cluster.by-name.maintenance_slot
+    disk_autoscaling = data.twc_database_cluster.by-name.disk_autoscaling
+    domains          = data.twc_database_cluster.external.domains[*].fqdn
+  }
 }
 ```
 
@@ -49,7 +59,9 @@ data "twc_database_cluster" "external" {
 - `cpu` (Number) Number of CPU cores
 - `cpu_frequency` (String) CPU frequency
 - `description` (String) Description of specified database cluster
+- `disk_autoscaling` (List of Object) Automatic disk extension settings (see [below for nested schema](#nestedatt--disk_autoscaling))
 - `disk_stats` (List of Object) Information about database disk stats (see [below for nested schema](#nestedatt--disk_stats))
+- `domains` (List of Object) Technical domains of the cluster (available when public access is enabled) (see [below for nested schema](#nestedatt--domains))
 - `hash_type` (String) Hash type of the database cluster
 - `is_autobackups_enabled` (Boolean) Flag that shows whether automatic backups are enabled
 - `is_backup_schedule_enabled` (Boolean) Flag that shows whether the backup schedule is enabled
@@ -57,13 +69,25 @@ data "twc_database_cluster" "external" {
 - `is_enabled_public_ipv6` (Boolean) Flag that shows whether public IPv6 is enabled
 - `is_external_ip` (Boolean) Flag that shows allowability database only by external IP address
 - `is_secure_connection_enabled` (Boolean) Flag that shows whether secure (SSL) connection is enabled
+- `maintenance_slot` (List of Object) Maintenance window of the cluster (see [below for nested schema](#nestedatt--maintenance_slot))
 - `networks` (List of Object) (see [below for nested schema](#nestedatt--networks))
 - `parameters` (Map of String) Configuration parameters for database cluster
 - `port` (Number) Listening port for incoming connections
 - `preset_id` (Number) Preset ID of the database cluster
 - `project_id` (Number) Project ID of the database cluster
 - `ram` (Number) Amount of RAM in MB
+- `replications` (Number) Total number of cluster nodes including the master
 - `status` (String) Current status of database cluster (`started`, `starting`, `stopped`, `no_paid`)
+
+<a id="nestedatt--disk_autoscaling"></a>
+### Nested Schema for `disk_autoscaling`
+
+Read-Only:
+
+- `is_enabled` (Boolean)
+- `step_size` (Number)
+- `threshold_percent` (Number)
+
 
 <a id="nestedatt--disk_stats"></a>
 ### Nested Schema for `disk_stats`
@@ -74,12 +98,35 @@ Read-Only:
 - `used` (Number)
 
 
+<a id="nestedatt--domains"></a>
+### Nested Schema for `domains`
+
+Read-Only:
+
+- `cert_status` (String)
+- `fqdn` (String)
+
+
+<a id="nestedatt--maintenance_slot"></a>
+### Nested Schema for `maintenance_slot`
+
+Read-Only:
+
+- `from` (String)
+- `to` (String)
+- `type` (String)
+
+
 <a id="nestedatt--networks"></a>
 ### Nested Schema for `networks`
 
 Read-Only:
 
+- `id` (String)
 - `ips` (List of Object) (see [below for nested schema](#nestedobjatt--networks--ips))
+- `nat_mode` (String)
+- `network_type` (String)
+- `port_id` (String)
 - `type` (String)
 
 <a id="nestedobjatt--networks--ips"></a>

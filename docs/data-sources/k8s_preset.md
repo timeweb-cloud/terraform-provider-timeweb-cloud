@@ -39,6 +39,7 @@ data "twc_k8s_preset" "example-k8s-preset-worker" {
 - `description_short` (String) Short description of specified preset
 - `disk` (Number) Disk size of specified preset
 - `location` (String) Location for k8s preset. Code location map to availability zone: `ru-1` — SPB (spb-3), `ru-3` — MSK (msk-1), `nl-1` — AMS (ams-1). Master and worker should be in one location
+- `master_nodes_count` (Number) Number of master nodes created by a master preset (`3` means high availability). Can be used as a filter
 - `network` (Number) Network bandwidth capacity of specified preset
 - `price_filter` (Block List, Max: 1) Price filter for select preset in specified price range (see [below for nested schema](#nestedblock--price_filter))
 - `ram` (Number) RAM size of specified preset

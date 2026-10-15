@@ -14,13 +14,17 @@ Data source that provides bunch of useful parameters for filtering and suitable 
 ```terraform
 # Select a router preset. All parameters are filters, specify only the ones you need.
 data "twc_router_preset" "example-router-preset" {
-  location = "ru-1"
+  location = "ru-3"
 
-  # Price filter (inclusive range)
+  # Price filter (inclusive range, fractional values are allowed)
   price_filter {
     from = 0
-    to   = 1000
+    to   = 999.99
   }
+}
+
+output "router_preset_price" {
+  value = data.twc_router_preset.example-router-preset.price
 }
 
 # Usage example: pass the found preset id into a router

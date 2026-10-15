@@ -14,13 +14,13 @@ Resource for describing needed database user and provides actual information abo
 ```terraform
 # Select a preset for the MySQL cluster
 data "twc_database_preset" "example-db-preset" {
-  location = "ru-1"
+  location = "ru-3"
   type     = "mysql"
   disk     = 8 * 1024
 
   price_filter {
-    from = 100
-    to   = 500
+    from = 1000
+    to   = 1500
   }
 }
 
@@ -56,20 +56,33 @@ resource "twc_database_user" "example-mysql-8-admin" {
   privileges = ["SELECT", "INSERT", "UPDATE", "DELETE", "ALTER", "REFERENCES", "CREATE", "DROP", "INDEX"]
 }
 
-# User with privileges scoped to a single database (instance)
+# User with privileges scoped to a single database (instance).
+# The user gets no privileges on databases that are not listed in instance blocks.
 resource "twc_database_user" "example-mysql-8-user" {
   cluster_id = twc_database_cluster.example-mysql-8.id
 
   login    = "otheruser"
   password = "examplepassword1"
 
+  # Hosts the user may log in from (e.g. "192.168.0.%" for the local network).
+  # Set at creation; changing it recreates the user
+  host = "%"
+
   instance {
     instance_id = twc_database_instance.example-mysql-8-instance.id
     privileges  = ["SELECT", "INSERT", "UPDATE", "DELETE"]
   }
+
+  # Time limits for operations (default 30m)
+  timeouts {
+    create = "45m"
+  }
 }
 
-# User with privileges scoped to multiple databases (instances)
+# User with privileges scoped to multiple databases (instances).
+# Global privileges (PostgreSQL CREATEDB / CREATEROLE and the like) belong to the user:
+# changing privileges of one database keeps them. If the user owns one of the
+# databases, its privileges can't be changed — Terraform shows a warning.
 resource "twc_database_user" "example-mysql-8-multi-user" {
   cluster_id = twc_database_cluster.example-mysql-8.id
 
@@ -100,9 +113,10 @@ resource "twc_database_user" "example-mysql-8-multi-user" {
 
 - `description` (String) Description for user
 - `for_all` (Boolean) Flag that grants the user privileges for all databases in the cluster
-- `host` (String) Allowed host for login as this user
+- `host` (String) Allowed host for login as this user. Changing it recreates the user
 - `instance` (Block List) Privileges of user by instance (see [below for nested schema](#nestedblock--instance))
 - `privileges` (List of String) Privileges granted to the user (engine-specific). Common SQL values: `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `CREATE`, `DROP`, `ALTER`, `INDEX`, `REFERENCES`. PostgreSQL also: `CREATEDB`, `CREATEROLE`. Redis: `READ`, `WRITE`, `ADMIN`
+- `timeouts` (Block, Optional) (see [below for nested schema](#nestedblock--timeouts))
 
 ### Read-Only
 
@@ -115,4 +129,14 @@ Optional:
 
 - `instance_id` (Number) Database instance ID for which user has privileges
 - `privileges` (List of String) Privileges granted to the user on this database (engine-specific). Common SQL values: `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `CREATE`, `DROP`, `ALTER`, `INDEX`, `REFERENCES`
+
+
+<a id="nestedblock--timeouts"></a>
+### Nested Schema for `timeouts`
+
+Optional:
+
+- `create` (String)
+- `delete` (String)
+- `update` (String)
 

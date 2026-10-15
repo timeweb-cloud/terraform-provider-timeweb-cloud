@@ -23,10 +23,9 @@ resource "twc_k8s_cluster" "example-k8s-cluster" {
   name        = "example-cluster"
   description = "some example cluster"
 
-  high_availability = false
-  version           = "v1.31.0"
-  network_driver    = "flannel"
-  ingress           = true
+  version        = "v1.34.11+k0s.0"
+  network_driver = "calico"
+  ingress        = true
 
   preset_id = data.twc_k8s_preset.example-k8s-preset-master.id
 }
@@ -44,22 +43,61 @@ resource "twc_k8s_node_group" "example-k8s-node-group" {
 
   preset_id = data.twc_k8s_preset.example-k8s-preset-worker.id
 
+  # Nodes added later by increasing node_count get the group's labels and taints too
   node_count = 2
 
   # Automatically recreate failed nodes
   is_autohealing = true
 
-  # Node group labels
+  # Node group labels (applied to every node of the group)
   labels {
     key   = "environment"
     value = "production"
   }
 
-  # Taints for the node group (control pod scheduling onto nodes)
+  # Taints for the node group (control pod scheduling onto nodes). They are applied
+  # to the nodes already at creation. Changing labels keeps taints on the nodes and
+  # vice versa; removing all taints blocks removes them from the nodes.
+  # effect: NoSchedule, PreferNoSchedule or NoExecute
   taints {
     key    = "dedicated"
     value  = "gpu"
     effect = "NoSchedule"
+  }
+
+  taints {
+    key    = "tier"
+    value  = "backend"
+    effect = "PreferNoSchedule"
+  }
+
+  # Time limits for operations (defaults: create/update — 60m, delete — 30m)
+  timeouts {
+    create = "90m"
+    update = "90m"
+  }
+}
+
+### Node group with autoscaling and fine-tuned cluster autoscaler
+
+resource "twc_k8s_node_group" "example-k8s-autoscaled-node-group" {
+  cluster_id = twc_k8s_cluster.example-k8s-cluster.id
+  name       = "example-k8s-autoscaled-node-group"
+
+  preset_id = data.twc_k8s_preset.example-k8s-preset-worker.id
+
+  node_count     = 1
+  is_autoscaling = true
+  min_size       = 1
+  max_size       = 5
+
+  # Requires K8S version 1.34 or newer. Fields that are not set use API defaults,
+  # removing the block resets all settings to defaults
+  autoscaler_settings {
+    scale_down_utilization_threshold = 0.6
+    scale_down_unneeded_duration     = 600 # seconds
+    max_node_provision_duration      = 900 # seconds
+    ignore_daemonsets_utilization    = true
   }
 }
 ```
@@ -70,10 +108,11 @@ resource "twc_k8s_node_group" "example-k8s-node-group" {
 
 - `cluster_id` (Number) K8S cluster ID for which node group should be created
 - `name` (String) K8S node group name
-- `node_count` (Number) Count of nodes in group
+- `node_count` (Number) Count of nodes in group (at least `1`). When `is_autoscaling = true` it is the initial count: later changes made by the autoscaler (and changes of this value) are ignored
 
 ### Optional
 
+- `autoscaler_settings` (Block List, Max: 1) Fine-tuning of the cluster autoscaler for this group. Applied only when `is_autoscaling = true`, requires K8S version `1.34` or newer. Fields that are not set use API defaults. Removing the block resets all settings to defaults (see [below for nested schema](#nestedblock--autoscaler_settings))
 - `configuration` (Block List, Max: 1) Configuration node group workers (see [below for nested schema](#nestedblock--configuration))
 - `is_autohealing` (Boolean) Automatic recreating failed nodes
 - `is_autoscaling` (Boolean) Automatic increase/decrease of the number of nodes in a group depending on the load
@@ -83,11 +122,25 @@ resource "twc_k8s_node_group" "example-k8s-node-group" {
 - `preset_id` (Number) Preset ID for nodes in group
 - `public_ip_enabled` (Boolean) param that shows will any node has public ip
 - `taints` (Block List) K8S node group taints (see [below for nested schema](#nestedblock--taints))
+- `timeouts` (Block, Optional) (see [below for nested schema](#nestedblock--timeouts))
 - `virtual_router_id` (String) Virtual router id that node group should use
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
+
+<a id="nestedblock--autoscaler_settings"></a>
+### Nested Schema for `autoscaler_settings`
+
+Optional:
+
+- `ignore_daemonsets_utilization` (Boolean) Ignore DaemonSet pods when calculating node utilization for scale down. Default `false`
+- `max_node_provision_duration` (Number) Maximum time (seconds) the autoscaler waits for a node to be provisioned. Minimum and default `600`
+- `scale_down_unneeded_duration` (Number) How long (seconds) a node should be unneeded before it is eligible for scale down. Default `300`
+- `scale_down_unready_duration` (Number) How long (seconds) an unready node should be unneeded before it is eligible for scale down. Default `900`
+- `scale_down_utilization_threshold` (Number) Node utilization level (from `0` to `1`) below which a node can be considered for scale down. Default `0.5`
+- `zero_or_max_node_scaling` (Boolean) Scale the group either to zero or to the maximum size. Default `false`
+
 
 <a id="nestedblock--configuration"></a>
 ### Nested Schema for `configuration`
@@ -118,9 +171,19 @@ Required:
 
 Required:
 
-- `effect` (String) K8S node group taint effect
+- `effect` (String) K8S node group taint effect: `NoSchedule`, `PreferNoSchedule` or `NoExecute`
 - `key` (String) K8S node group taint key
 - `value` (String) K8S node group taint value
+
+
+<a id="nestedblock--timeouts"></a>
+### Nested Schema for `timeouts`
+
+Optional:
+
+- `create` (String)
+- `delete` (String)
+- `update` (String)
 
 ## Import
 

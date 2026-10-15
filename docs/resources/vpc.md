@@ -122,8 +122,16 @@ resource "twc_lb" "example-lb" {
 ### Optional
 
 - `description` (String) Description for VPC
+- `timeouts` (Block, Optional) (see [below for nested schema](#nestedblock--timeouts))
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
+
+<a id="nestedblock--timeouts"></a>
+### Nested Schema for `timeouts`
+
+Optional:
+
+- `delete` (String)
 

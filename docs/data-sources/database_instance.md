@@ -20,8 +20,16 @@ data "twc_database_instance" "example-instance" {
   name = "example"
 }
 
-output "instance_owner_id" {
-  value = data.twc_database_instance.example-instance.owner_id
+output "instance_owner" {
+  value = {
+    id    = data.twc_database_instance.example-instance.owner_id
+    login = data.twc_database_instance.example-instance.owner_login
+  }
+}
+
+# Extensions of the database (PostgreSQL, RabbitMQ)
+output "instance_extensions" {
+  value = data.twc_database_instance.example-instance.extensions
 }
 ```
 
@@ -40,5 +48,8 @@ output "instance_owner_id" {
 ### Read-Only
 
 - `description` (String) Description of specified database instance
+- `extensions` (Set of String) Extensions installed into the database (PostgreSQL, RabbitMQ)
+- `extensions_is_global` (Boolean) Whether the same set of extensions is applied to all databases of the cluster
 - `owner_id` (Number) ID of the admin (user) that owns this database instance
+- `owner_login` (String) Login of the admin (user) that owns this database instance
 

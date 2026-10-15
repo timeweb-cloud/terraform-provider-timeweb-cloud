@@ -12,42 +12,66 @@ Resource for describing needed database cluster and provides actual information 
 ## Примеры использования
 
 ```terraform
-### PostgreSQL cluster with config parameters
+### PostgreSQL cluster with maintenance window and disk autoscaling
 
 # Pick a preset matching the database type (presets are bound to a type and location)
 data "twc_database_preset" "example-postgres-preset" {
-  location = "ru-1"
+  location = "ru-3"
   type     = "postgres"
-  disk     = 8 * 1024
+  # postgres17 requires at least 2 GB of RAM
+  ram  = 2 * 1024
+  disk = 20 * 1024
 }
 
 resource "twc_database_cluster" "example-postgres" {
   name = "example_postgres"
-  type = "postgres"
+  type = "postgres17"
 
   preset_id = data.twc_database_preset.example-postgres-preset.id
-
-  # config_parameters — overrides for the database engine configuration parameters
-  config_parameters = {
-    max_connections = 100
-  }
 
   # is_external_ip — access the cluster over an external (public) IP
   is_external_ip = true
   # is_secure_connection_enabled — enable SSL connection to the cluster
   is_secure_connection_enabled = true
+
+  # Maintenance window: any_time or fixed_time (from/to in HH:MMZ, UTC, at least 60 minutes)
+  maintenance_slot {
+    type = "fixed_time"
+    from = "01:00Z"
+    to   = "03:00Z"
+  }
+
+  # Automatic disk extension (PostgreSQL and MySQL without replicas)
+  disk_autoscaling {
+    is_enabled        = true
+    step_size         = 10240 # MB, multiple of 5120
+    threshold_percent = 90    # 80 | 90 | 95
+  }
+
+  # Paid deletion protection: the cluster can be restored after deletion
+  is_soft_remove_recovery = true
+
+  # Time limits for operations (defaults: create/update — 60m, delete — 30m)
+  timeouts {
+    create = "90m"
+  }
+}
+
+# Technical domains of the cluster (available with public access)
+output "postgres_domains" {
+  value = twc_database_cluster.example-postgres.domains[*].fqdn
 }
 
 ### MySQL cluster
 
 data "twc_database_preset" "example-mysql-preset" {
-  location = "ru-1"
+  location = "ru-3"
   type     = "mysql"
   disk     = 8 * 1024
 
   price_filter {
-    from = 100
-    to   = 500
+    from = 1000
+    to   = 1500
   }
 }
 
@@ -65,21 +89,33 @@ resource "twc_database_cluster" "example-mysql-8" {
   }
 }
 
-### Redis cluster with replicas
+### PostgreSQL cluster with replicas
+
+resource "twc_database_cluster" "example-postgres-replicas" {
+  name = "example_postgres_replicas"
+  type = "postgres17"
+
+  preset_id = data.twc_database_preset.example-postgres-preset.id
+
+  # replications — total number of nodes including the master: 1, 3 or 5.
+  # Available only for database types with replication (MySQL, PostgreSQL).
+  # In place it can only be increased and only for PostgreSQL.
+  # Not compatible with disk_autoscaling and is_soft_remove_recovery.
+  replications = 3
+}
+
+### Redis cluster
 
 data "twc_database_preset" "example-redis-preset" {
-  location = "ru-1"
+  location = "ru-3"
   type     = "redis"
 }
 
 resource "twc_database_cluster" "example-redis" {
   name = "example_redis"
-  type = "redis"
+  type = "redis8_1"
 
   preset_id = data.twc_database_preset.example-redis-preset.id
-
-  # replications — number of replicas (not available for all database types/presets)
-  replications = 1
 }
 
 ### Clickhouse cluster with inline admin
@@ -87,7 +123,7 @@ resource "twc_database_cluster" "example-redis" {
 # Some engines (for example clickhouse) require an admin at creation time.
 # The admin block is create-only (ForceNew); the API does not return the password.
 data "twc_database_preset" "example-clickhouse-preset" {
-  location = "ru-1"
+  location = "ru-3"
   type     = "clickhouse"
 }
 
@@ -119,13 +155,17 @@ resource "twc_database_cluster" "example-clickhouse" {
 - `availability_zone` (String) Availability zone for database cluster
 - `config_parameters` (Map of String) Configuration parameters for database cluster
 - `description` (String) Description for project
+- `disk_autoscaling` (Block List, Max: 1) Automatic disk extension. Available for PostgreSQL and MySQL clusters without replicas. To disable set `is_enabled = false` (removing the block keeps current settings) (see [below for nested schema](#nestedblock--disk_autoscaling))
 - `hash_type` (String) Hash type for database (mysql): `caching_sha2` or `mysql_native`. Computed from API when not set explicitly
 - `is_enabled_public_ipv6` (Boolean) Flag that shows whether public IPv6 is enabled for the cluster
 - `is_external_ip` (Boolean) Flag that shows allowability database only by external IP address
 - `is_secure_connection_enabled` (Boolean) Flag that shows whether secure (SSL) connection is enabled for the cluster
+- `is_soft_remove_recovery` (Boolean) Paid deletion protection: ability to restore the cluster after deletion. Not available for clusters with replicas. Free for the first days after creation, see pricing
+- `maintenance_slot` (Block List, Max: 1) Maintenance window of the cluster. `any_time` (default) — maintenance may be performed at any time, `fixed_time` — only between `from` and `to` (UTC) (see [below for nested schema](#nestedblock--maintenance_slot))
 - `network` (Block List, Max: 1) Network for database cluster (see [below for nested schema](#nestedblock--network))
 - `project_id` (Number) Project ID for managed resource
-- `replications` (Number) Number of replication instances
+- `replications` (Number) Total number of cluster nodes including the master (`1`, `3` or `5`). Replication is available only for some database types (see `is_available_replication` of the database type). In place it can only be increased and only for PostgreSQL; can't be combined with `disk_autoscaling` and `is_soft_remove_recovery`
+- `timeouts` (Block, Optional) (see [below for nested schema](#nestedblock--timeouts))
 
 ### Read-Only
 
@@ -133,6 +173,7 @@ resource "twc_database_cluster" "example-clickhouse" {
 - `cpu` (Number) Number of CPU cores
 - `cpu_frequency` (String) CPU frequency
 - `disk_stats` (List of Object) Information about database disk stats (see [below for nested schema](#nestedatt--disk_stats))
+- `domains` (List of Object) Technical domains of the cluster (available when public access is enabled) (see [below for nested schema](#nestedatt--domains))
 - `id` (String) The ID of this resource.
 - `is_autobackups_enabled` (Boolean) Flag that shows whether automatic backups are enabled
 - `is_backup_schedule_enabled` (Boolean) Flag that shows whether the backup schedule is enabled
@@ -157,12 +198,48 @@ Optional:
 - `host` (String) Allowed host for the admin
 
 
+<a id="nestedblock--disk_autoscaling"></a>
+### Nested Schema for `disk_autoscaling`
+
+Required:
+
+- `is_enabled` (Boolean) Enable automatic disk extension
+
+Optional:
+
+- `step_size` (Number) Extension step in MB (from `5120` to `102400`, multiple of `5120`). Default `5120`
+- `threshold_percent` (Number) Disk usage percent that triggers extension (`80`, `90`, `95`). Default `80`
+
+
+<a id="nestedblock--maintenance_slot"></a>
+### Nested Schema for `maintenance_slot`
+
+Required:
+
+- `type` (String) Maintenance slot type (`any_time`, `fixed_time`)
+
+Optional:
+
+- `from` (String) Window start in `HH:MMZ` format (UTC), required for `fixed_time`
+- `to` (String) Window end in `HH:MMZ` format (UTC), required for `fixed_time`. The window must be at least 60 minutes long
+
+
 <a id="nestedblock--network"></a>
 ### Nested Schema for `network`
 
 Required:
 
 - `id` (String) Network ID
+
+
+<a id="nestedblock--timeouts"></a>
+### Nested Schema for `timeouts`
+
+Optional:
+
+- `create` (String)
+- `delete` (String)
+- `update` (String)
 
 
 <a id="nestedatt--disk_stats"></a>
@@ -174,12 +251,25 @@ Read-Only:
 - `used` (Number)
 
 
+<a id="nestedatt--domains"></a>
+### Nested Schema for `domains`
+
+Read-Only:
+
+- `cert_status` (String)
+- `fqdn` (String)
+
+
 <a id="nestedatt--networks"></a>
 ### Nested Schema for `networks`
 
 Read-Only:
 
+- `id` (String)
 - `ips` (List of Object) (see [below for nested schema](#nestedobjatt--networks--ips))
+- `nat_mode` (String)
+- `network_type` (String)
+- `port_id` (String)
 - `type` (String)
 
 <a id="nestedobjatt--networks--ips"></a>
