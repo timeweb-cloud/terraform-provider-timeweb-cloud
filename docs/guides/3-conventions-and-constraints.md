@@ -102,7 +102,7 @@ The values below are enforced by the provider. Using anything else fails at
 | `twc_s3_user` | `status` | `active`, `inactive` |
 | `twc_vpc` | `location` | `ru-1`, `ru-3`, `de-1`, `nl-1` |
 | `twc_configurator` | `preset_type` | `premium`, `standard`, `gpu`, `dedicated_cpu` |
-| `twc_presets` | `preset_type` | `premium`, `standard`, `high_cpu` |
+| `twc_presets` | `preset_type` | `premium`, `standard`, `high_cpu`, `ultra` |
 | `twc_k8s_configurator` / `twc_k8s_preset` | `type` | `master`, `worker` |
 | `twc_k8s_configurator` | `preset_type` | `premium`, `dedicated_cpu`, `gpu` |
 | `twc_network_drive_preset` | `type` | `nvme`, `hdd` |

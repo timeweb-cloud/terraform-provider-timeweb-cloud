@@ -205,7 +205,7 @@ resource "twc_server" "example-server-with-local-network-and-address" {
 
 - `availability_zone` (String) Availability zone for server (`spb-1`, `spb-3`, 'spb-4', `msk-1`, `nsk-1`, 'ams-1', 'fra-1', 'ala-1')
 - `bandwidth` (Number) Bandwidth for server (Mbps). Read back from the public network
-- `cloud_init` (String) Cloud-init script. If script requires external network you should use floating_ip_id field instead of twc_floating_ip.resource
+- `cloud_init` (String) Cloud-init script. If script requires external network you should use floating_ip_id field instead of twc_floating_ip.resource. Cloud-init runs only on first boot: changing it on an existing server only updates the stored script, which is applied on the next OS reinstall
 - `comment` (String) Comment for server
 - `configuration` (Block List, Max: 1) Configuration for server (see [below for nested schema](#nestedblock--configuration))
 - `floating_ip_id` (String) Floating IP ID for server

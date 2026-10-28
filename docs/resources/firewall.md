@@ -77,6 +77,7 @@ resource "twc_server" "vds-with-preset-2" {
 
 - `description` (String) Description for firewall
 - `link` (Block Set) (see [below for nested schema](#nestedblock--link))
+- `timeouts` (Block, Optional) (see [below for nested schema](#nestedblock--timeouts))
 
 ### Read-Only
 
@@ -90,4 +91,12 @@ Required:
 
 - `id` (String) Resource ID
 - `type` (String) Resource type [server, dbaas, balancer, app]
+
+
+<a id="nestedblock--timeouts"></a>
+### Nested Schema for `timeouts`
+
+Optional:
+
+- `delete` (String)
 
